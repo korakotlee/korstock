@@ -9,7 +9,10 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => new _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  // Animation<double> _animation;
+  // AnimationController _animationController;
   List sampleData = [
     {"open": 50.0, "high": 100.0, "low": 40.0, "close": 80, "volumeto": 5000.0},
     {"open": 80.0, "high": 90.0, "low": 55.0, "close": 65, "volumeto": 4000.0},
@@ -28,25 +31,83 @@ class _HomePageState extends State<HomePage> {
     {"open": 70.0, "high": 100.0, "low": 50.0, "close": 50, "volumeto": 3000.0},
     {"open": 70.0, "high": 100.0, "low": 50.0, "close": 50, "volumeto": 3000.0},
   ];
-  int i = 3;
+
   @override
   Widget build(BuildContext context) {
     setLandscape();
     return new Scaffold(
         body: SafeArea(
-            child: Stack(
-      children: <Widget>[
-        bg("KorStock $i", "Megrim"),
+      child: Stack(children: <Widget>[
+        bg("KorStock", "Megrim"),
         candle(),
-        Positioned(
-          right: 20.0,
-          top: 5.0,
-          child: Text('coins: 100',
-              style: TextStyle(
-                  fontSize: 18, fontFamily: "Bitter", color: Colors.white)),
-        ),
-      ],
-    )));
+        coins(),
+        buttons()
+      ]),
+    ));
+  }
+
+  Widget buttons() {
+    return Positioned(
+        bottom: 40,
+        right: 10,
+        child: Container(
+            height: 300,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  ButtonTheme(
+                    minWidth: 88.0,
+                    height: 36.0,
+                    buttonColor: Colors.indigo,
+                    child: RaisedButton(
+                      child: Text(
+                        'BUY',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        // _animationController.forward();
+                      },
+                    ),
+                  ),
+                  ButtonTheme(
+                    minWidth: 88.0,
+                    height: 36.0,
+                    buttonColor: Colors.indigo,
+                    child: RaisedButton(
+                      child: Text(
+                        'HOLD',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        // _animationController.forward();
+                      },
+                    ),
+                  ),
+                  ButtonTheme(
+                    minWidth: 88.0,
+                    height: 36.0,
+                    buttonColor: Colors.indigo,
+                    child: RaisedButton(
+                      child: Text(
+                        'SELL',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        // _animationController.forward();
+                      },
+                    ),
+                  ),
+                ])));
+  }
+
+  Widget coins() {
+    return Positioned(
+      right: 20.0,
+      top: 5.0,
+      child: Text('coins: 100',
+          style: TextStyle(
+              fontSize: 18, fontFamily: "Bitter", color: Color(0xff308eab))),
+    );
   }
 
   Widget candle() {
@@ -80,19 +141,15 @@ class _HomePageState extends State<HomePage> {
         child: Text(text,
             style:
                 TextStyle(fontSize: 24, fontFamily: font, color: Colors.white)),
-        // child: FittedBox(
-        //   fit: BoxFit.contain,
-        //   child: Text(text,
-        //       style: TextStyle(fontFamily: font, color: Colors.white)),
-        // ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             stops: [0.1, 0.9],
             colors: [
-              Colors.brown,
               Colors.amberAccent,
+              Color(0xffF5F8FA),
+              // Colors.brown,
             ],
           ),
         ));
