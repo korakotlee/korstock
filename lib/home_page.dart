@@ -64,6 +64,7 @@ class _HomePageState extends State<HomePage>
                         'BUY',
                         style: TextStyle(color: Colors.white),
                       ),
+                      shape: StadiumBorder(),
                       onPressed: () {
                         // _animationController.forward();
                       },
@@ -78,6 +79,7 @@ class _HomePageState extends State<HomePage>
                         'HOLD',
                         style: TextStyle(color: Colors.white),
                       ),
+                      shape: StadiumBorder(),
                       onPressed: () {
                         // _animationController.forward();
                       },
@@ -92,6 +94,7 @@ class _HomePageState extends State<HomePage>
                         'SELL',
                         style: TextStyle(color: Colors.white),
                       ),
+                      shape: StadiumBorder(),
                       onPressed: () {
                         // _animationController.forward();
                       },
@@ -102,12 +105,14 @@ class _HomePageState extends State<HomePage>
 
   Widget coins() {
     return Positioned(
-      right: 20.0,
-      top: 5.0,
-      child: Text('coins: 100',
-          style: TextStyle(
-              fontSize: 18, fontFamily: "Bitter", color: Color(0xff308eab))),
-    );
+        right: 20.0,
+        top: 5.0,
+        child: Row(children: <Widget>[
+          Image.asset('img/coin.png', width: 40.0),
+          Text('  coins: 100',
+              style: TextStyle(
+                  fontSize: 18, fontFamily: "Bitter", color: Color(0xff308eab)))
+        ]));
   }
 
   Widget candle() {
@@ -140,7 +145,7 @@ class _HomePageState extends State<HomePage>
         // height: (height - 25) / 3,
         child: Text(text,
             style:
-                TextStyle(fontSize: 24, fontFamily: font, color: Colors.white)),
+                TextStyle(fontSize: 36, fontFamily: font, color: Colors.white)),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
