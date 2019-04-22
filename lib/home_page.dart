@@ -11,8 +11,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  // Animation<double> _animation;
-  // AnimationController _animationController;
   List sampleData = [
     {"open": 50.0, "high": 100.0, "low": 40.0, "close": 80, "volumeto": 5000.0},
     {"open": 80.0, "high": 90.0, "low": 55.0, "close": 65, "volumeto": 4000.0},
@@ -38,7 +36,7 @@ class _HomePageState extends State<HomePage>
     return new Scaffold(
         body: SafeArea(
       child: Stack(children: <Widget>[
-        bg("KorStock", "Megrim"),
+        bg("KorStock"),
         candle(),
         coins(),
         buttons()
@@ -66,7 +64,6 @@ class _HomePageState extends State<HomePage>
                       ),
                       shape: StadiumBorder(),
                       onPressed: () {
-                        // _animationController.forward();
                       },
                     ),
                   ),
@@ -81,7 +78,6 @@ class _HomePageState extends State<HomePage>
                       ),
                       shape: StadiumBorder(),
                       onPressed: () {
-                        // _animationController.forward();
                       },
                     ),
                   ),
@@ -96,7 +92,6 @@ class _HomePageState extends State<HomePage>
                       ),
                       shape: StadiumBorder(),
                       onPressed: () {
-                        // _animationController.forward();
                       },
                     ),
                   ),
@@ -136,16 +131,15 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Widget bg(text, font) {
+  Widget bg(text) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
         width: width,
         height: height - 25,
-        // height: (height - 25) / 3,
         child: Text(text,
             style:
-                TextStyle(fontSize: 36, fontFamily: font, color: Colors.white)),
+                TextStyle(fontSize: 36, fontFamily: "Megrim", color: Colors.white)),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
