@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   // String s = Quote.getFile();
-  List<Quote> quotes;
+  List<Map<String, dynamic>> quotes;
   List sampleData = [
     {"open": 50.0, "high": 100.0, "low": 40.0, "close": 80, "volumeto": 5000.0},
     {"open": 80.0, "high": 90.0, "low": 55.0, "close": 65, "volumeto": 4000.0},
@@ -32,28 +32,24 @@ class _HomePageState extends State<HomePage> {
     {"open": 70.0, "high": 100.0, "low": 50.0, "close": 50, "volumeto": 3000.0},
   ];
 
-    @override
-    void initState() {
-        Quote.getQuote().then((result) {
-            // If we need to rebuild the widget with the resulting data,
-            // make sure to use `setState`
-            setState(() {
-                quotes = result;
-            });
-        });
-    }
-    
+  @override
+  void initState() {
+    // Quote.getQuote().then((result) {
+    Quote.getQuoteMap().then((result) {
+      setState(() {
+        quotes = result;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     setLandscape();
     return new Scaffold(
         body: SafeArea(
-      child: Stack(children: <Widget>[
-        bg("KorStock"),
-        candle(),
-        coins(),
-        buttons()
-      ]),
+      child: Stack(
+          children: <Widget>[bg("KorStock"), candle(), coins(), buttons()]),
     ));
   }
 
@@ -76,8 +72,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(color: Colors.white),
                       ),
                       shape: StadiumBorder(),
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                     ),
                   ),
                   ButtonTheme(
@@ -90,8 +85,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(color: Colors.white),
                       ),
                       shape: StadiumBorder(),
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                     ),
                   ),
                   ButtonTheme(
@@ -104,8 +98,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(color: Colors.white),
                       ),
                       shape: StadiumBorder(),
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                     ),
                   ),
                 ])));
@@ -151,8 +144,8 @@ class _HomePageState extends State<HomePage> {
         width: width,
         height: height - 25,
         child: Text(text,
-            style:
-                TextStyle(fontSize: 36, fontFamily: "Megrim", color: Colors.white)),
+            style: TextStyle(
+                fontSize: 36, fontFamily: "Megrim", color: Colors.white)),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
