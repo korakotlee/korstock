@@ -1,0 +1,37 @@
+name: korstock
+description: Simple Stock Game
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_candlesticks:
+    path: C:\Users\kleem\Korakot\apps\flutter-candlesticks
+    # path: /c/Users/kleem/Korakot/apps/flutter-candlesticks
+  # cupertino_icons: ^0.1.2
+  # sqflite: any
+  # path_provider: 0.5.0+1
+  # intl: ^0.15.7
+  # font_awesome_flutter: any
+  shared_preferences: ^0.4.3
+  # credit_card_type_detector: ^1.0.0
+  # image_picker: any
+  # mirrors: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
+  assets:
+   - img/coin.png
+  fonts:
+    - family: Bitter
+      fonts:
+        - asset: fonts/Bitter-Regular.ttf
+    - family: Megrim
+      fonts:
+        - asset: fonts/Megrim.ttf
