@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_candlesticks/flutter_candlesticks.dart';
+import 'package:korstock/quote.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -9,8 +10,9 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => new _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> {
+  // String s = Quote.getFile();
+  List<Quote> quotes;
   List sampleData = [
     {"open": 50.0, "high": 100.0, "low": 40.0, "close": 80, "volumeto": 5000.0},
     {"open": 80.0, "high": 90.0, "low": 55.0, "close": 65, "volumeto": 4000.0},
@@ -30,6 +32,17 @@ class _HomePageState extends State<HomePage>
     {"open": 70.0, "high": 100.0, "low": 50.0, "close": 50, "volumeto": 3000.0},
   ];
 
+    @override
+    void initState() {
+        Quote.getQuote().then((result) {
+            // If we need to rebuild the widget with the resulting data,
+            // make sure to use `setState`
+            setState(() {
+                quotes = result;
+            });
+        });
+    }
+    
   @override
   Widget build(BuildContext context) {
     setLandscape();
