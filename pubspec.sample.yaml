@@ -1,33 +1,37 @@
 name: korstock
-description: Simple Stock Game
+description: Game to predeict stcok
 version: 1.0.0+1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  flutter_candlesticks:
+    path: /home/korakot/apps/flutter-candlesticks
   flutter:
     sdk: flutter
-  flutter_candlesticks:
-    path: C:\Users\kleem\Korakot\apps\flutter-candlesticks
-    # path: /c/Users/kleem/Korakot/apps/flutter-candlesticks
-  # cupertino_icons: ^0.1.2
-  # sqflite: any
-  # path_provider: 0.5.0+1
-  # intl: ^0.15.7
-  # font_awesome_flutter: any
-  shared_preferences: ^0.4.3
-  # credit_card_type_detector: ^1.0.0
-  # image_picker: any
-  # mirrors: any
+  cupertino_icons: ^0.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 flutter:
   uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
   assets:
    - img/coin.png
+   - assets/spy.json
+   - assets/dia.json
+   - assets/bzun.json
+  #  - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
   fonts:
     - family: Bitter
       fonts:
@@ -35,3 +39,6 @@ flutter:
     - family: Megrim
       fonts:
         - asset: fonts/Megrim.ttf
+
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

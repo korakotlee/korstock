@@ -1,0 +1,1011 @@
+{
+    "Meta Data": {
+        "1. Information": "Daily Time Series with Splits and Dividend Events",
+        "2. Symbol": "DIA",
+        "3. Last Refreshed": "2019-04-23 10:35:34",
+        "4. Output Size": "Compact",
+        "5. Time Zone": "US/Eastern"
+    },
+    "Time Series (Daily)": {
+        "2019-04-23": {
+            "1. open": "265.4500",
+            "2. high": "265.8200",
+            "3. low": "265.0632",
+            "4. close": "265.5400",
+            "5. adjusted close": "265.5400",
+            "6. volume": "567216",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-22": {
+            "1. open": "264.6000",
+            "2. high": "265.4400",
+            "3. low": "264.4400",
+            "4. close": "265.0700",
+            "5. adjusted close": "265.0700",
+            "6. volume": "1601713",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-18": {
+            "1. open": "264.9800",
+            "2. high": "265.9300",
+            "3. low": "264.3600",
+            "4. close": "265.5600",
+            "5. adjusted close": "265.5600",
+            "6. volume": "3469185",
+            "7. dividend amount": "0.1580",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-17": {
+            "1. open": "265.1000",
+            "2. high": "265.1900",
+            "3. low": "263.9200",
+            "4. close": "264.5300",
+            "5. adjusted close": "264.3727",
+            "6. volume": "2873566",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-16": {
+            "1. open": "265.2800",
+            "2. high": "265.3200",
+            "3. low": "263.9300",
+            "4. close": "264.5300",
+            "5. adjusted close": "264.3727",
+            "6. volume": "2536007",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-15": {
+            "1. open": "264.0200",
+            "2. high": "264.1900",
+            "3. low": "263.1500",
+            "4. close": "263.8100",
+            "5. adjusted close": "263.6531",
+            "6. volume": "2190288",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-12": {
+            "1. open": "263.8739",
+            "2. high": "264.3877",
+            "3. low": "263.0800",
+            "4. close": "264.0700",
+            "5. adjusted close": "263.9130",
+            "6. volume": "3395215",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-11": {
+            "1. open": "261.9200",
+            "2. high": "262.2500",
+            "3. low": "260.5800",
+            "4. close": "261.4000",
+            "5. adjusted close": "261.2446",
+            "6. volume": "2731683",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-10": {
+            "1. open": "261.9000",
+            "2. high": "262.0700",
+            "3. low": "261.0000",
+            "4. close": "261.6000",
+            "5. adjusted close": "261.4444",
+            "6. volume": "3602862",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-09": {
+            "1. open": "262.1200",
+            "2. high": "262.1400",
+            "3. low": "260.9500",
+            "4. close": "261.5100",
+            "5. adjusted close": "261.3545",
+            "6. volume": "4161583",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-08": {
+            "1. open": "262.8300",
+            "2. high": "263.4000",
+            "3. low": "262.3700",
+            "4. close": "263.2200",
+            "5. adjusted close": "263.0635",
+            "6. volume": "3231685",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-05": {
+            "1. open": "264.5600",
+            "2. high": "264.8400",
+            "3. low": "263.6100",
+            "4. close": "264.1600",
+            "5. adjusted close": "264.0029",
+            "6. volume": "3112718",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-04": {
+            "1. open": "262.2200",
+            "2. high": "263.9400",
+            "3. low": "262.1100",
+            "4. close": "263.7800",
+            "5. adjusted close": "263.6232",
+            "6. volume": "4397042",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-03": {
+            "1. open": "262.5800",
+            "2. high": "262.7200",
+            "3. low": "261.2200",
+            "4. close": "262.0000",
+            "5. adjusted close": "261.8442",
+            "6. volume": "3265528",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-02": {
+            "1. open": "262.0000",
+            "2. high": "262.0700",
+            "3. low": "261.0800",
+            "4. close": "261.6900",
+            "5. adjusted close": "261.5344",
+            "6. volume": "2320048",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-04-01": {
+            "1. open": "261.2300",
+            "2. high": "262.6600",
+            "3. low": "260.5800",
+            "4. close": "262.3900",
+            "5. adjusted close": "262.2340",
+            "6. volume": "6051711",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-29": {
+            "1. open": "258.5821",
+            "2. high": "259.3400",
+            "3. low": "257.5700",
+            "4. close": "259.1300",
+            "5. adjusted close": "258.9759",
+            "6. volume": "4255859",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-28": {
+            "1. open": "256.9200",
+            "2. high": "257.2800",
+            "3. low": "255.5900",
+            "4. close": "257.0800",
+            "5. adjusted close": "256.9271",
+            "6. volume": "2434379",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-27": {
+            "1. open": "256.6300",
+            "2. high": "257.4300",
+            "3. low": "254.1000",
+            "4. close": "256.1100",
+            "5. adjusted close": "255.9577",
+            "6. volume": "3166154",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-26": {
+            "1. open": "257.0500",
+            "2. high": "257.8300",
+            "3. low": "255.3000",
+            "4. close": "256.4600",
+            "5. adjusted close": "256.3075",
+            "6. volume": "3278718",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-25": {
+            "1. open": "254.6900",
+            "2. high": "255.8900",
+            "3. low": "253.5700",
+            "4. close": "255.0700",
+            "5. adjusted close": "254.9183",
+            "6. volume": "4982454",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-22": {
+            "1. open": "257.9200",
+            "2. high": "258.6400",
+            "3. low": "254.8650",
+            "4. close": "254.9600",
+            "5. adjusted close": "254.8084",
+            "6. volume": "6226489",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-21": {
+            "1. open": "256.3800",
+            "2. high": "259.9700",
+            "3. low": "256.3500",
+            "4. close": "259.5800",
+            "5. adjusted close": "259.4256",
+            "6. volume": "3800010",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-20": {
+            "1. open": "258.4600",
+            "2. high": "259.1700",
+            "3. low": "256.5500",
+            "4. close": "257.2900",
+            "5. adjusted close": "257.1370",
+            "6. volume": "4382622",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-19": {
+            "1. open": "260.1100",
+            "2. high": "260.9600",
+            "3. low": "258.0000",
+            "4. close": "258.8800",
+            "5. adjusted close": "258.7261",
+            "6. volume": "4761360",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-18": {
+            "1. open": "257.9400",
+            "2. high": "259.1167",
+            "3. low": "257.7102",
+            "4. close": "258.9900",
+            "5. adjusted close": "258.8360",
+            "6. volume": "2786156",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-15": {
+            "1. open": "257.5800",
+            "2. high": "259.1500",
+            "3. low": "256.3300",
+            "4. close": "258.3400",
+            "5. adjusted close": "258.1864",
+            "6. volume": "4225190",
+            "7. dividend amount": "0.5446",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-14": {
+            "1. open": "257.3300",
+            "2. high": "257.9400",
+            "3. low": "256.6200",
+            "4. close": "257.5400",
+            "5. adjusted close": "256.8454",
+            "6. volume": "3409957",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-13": {
+            "1. open": "256.8400",
+            "2. high": "258.0700",
+            "3. low": "256.0100",
+            "4. close": "257.3500",
+            "5. adjusted close": "256.6559",
+            "6. volume": "5272815",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-12": {
+            "1. open": "256.2400",
+            "2. high": "256.9700",
+            "3. low": "255.4300",
+            "4. close": "255.8600",
+            "5. adjusted close": "255.1699",
+            "6. volume": "6570541",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-11": {
+            "1. open": "252.8500",
+            "2. high": "256.8300",
+            "3. low": "252.4600",
+            "4. close": "256.7600",
+            "5. adjusted close": "256.0675",
+            "6. volume": "5469428",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-08": {
+            "1. open": "252.8800",
+            "2. high": "254.8950",
+            "3. low": "252.7400",
+            "4. close": "254.7100",
+            "5. adjusted close": "254.0230",
+            "6. volume": "5495828",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-07": {
+            "1. open": "256.4000",
+            "2. high": "256.4900",
+            "3. low": "253.6100",
+            "4. close": "254.8100",
+            "5. adjusted close": "254.1228",
+            "6. volume": "4104555",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-06": {
+            "1. open": "258.2400",
+            "2. high": "258.4526",
+            "3. low": "256.4500",
+            "4. close": "256.8700",
+            "5. adjusted close": "256.1772",
+            "6. volume": "3221994",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-05": {
+            "1. open": "258.2200",
+            "2. high": "258.8600",
+            "3. low": "257.3900",
+            "4. close": "258.1900",
+            "5. adjusted close": "257.4937",
+            "6. volume": "2107218",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-04": {
+            "1. open": "261.5000",
+            "2. high": "261.6800",
+            "3. low": "256.2010",
+            "4. close": "258.2800",
+            "5. adjusted close": "257.5834",
+            "6. volume": "4823948",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-03-01": {
+            "1. open": "261.1500",
+            "2. high": "261.5400",
+            "3. low": "259.2349",
+            "4. close": "260.4200",
+            "5. adjusted close": "259.7176",
+            "6. volume": "3676922",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-28": {
+            "1. open": "259.8600",
+            "2. high": "260.3700",
+            "3. low": "259.0600",
+            "4. close": "259.2800",
+            "5. adjusted close": "258.5807",
+            "6. volume": "2772931",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-27": {
+            "1. open": "259.8200",
+            "2. high": "260.4200",
+            "3. low": "258.7700",
+            "4. close": "259.8700",
+            "5. adjusted close": "259.1691",
+            "6. volume": "2777218",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-26": {
+            "1. open": "259.9600",
+            "2. high": "261.5000",
+            "3. low": "259.6000",
+            "4. close": "260.5400",
+            "5. adjusted close": "259.8373",
+            "6. volume": "3080247",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-25": {
+            "1. open": "261.8549",
+            "2. high": "262.3600",
+            "3. low": "260.7500",
+            "4. close": "260.8900",
+            "5. adjusted close": "260.1864",
+            "6. volume": "3585015",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-22": {
+            "1. open": "259.2600",
+            "2. high": "260.4100",
+            "3. low": "259.0100",
+            "4. close": "260.1700",
+            "5. adjusted close": "259.4683",
+            "6. volume": "3938538",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-21": {
+            "1. open": "258.9400",
+            "2. high": "259.2414",
+            "3. low": "257.5000",
+            "4. close": "258.5300",
+            "5. adjusted close": "257.8327",
+            "6. volume": "3197179",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-20": {
+            "1. open": "258.8200",
+            "2. high": "259.7600",
+            "3. low": "258.3200",
+            "4. close": "259.5000",
+            "5. adjusted close": "258.8001",
+            "6. volume": "2453981",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-19": {
+            "1. open": "257.9600",
+            "2. high": "259.4800",
+            "3. low": "257.9600",
+            "4. close": "258.8100",
+            "5. adjusted close": "258.1120",
+            "6. volume": "2744450",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-15": {
+            "1. open": "256.1700",
+            "2. high": "258.6800",
+            "3. low": "256.1500",
+            "4. close": "258.6500",
+            "5. adjusted close": "257.9524",
+            "6. volume": "4751072",
+            "7. dividend amount": "0.6980",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-14": {
+            "1. open": "254.5400",
+            "2. high": "256.1700",
+            "3. low": "253.6200",
+            "4. close": "255.1600",
+            "5. adjusted close": "253.7870",
+            "6. volume": "3810979",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-13": {
+            "1. open": "255.5300",
+            "2. high": "256.5560",
+            "3. low": "255.1177",
+            "4. close": "255.8000",
+            "5. adjusted close": "254.4235",
+            "6. volume": "2918218",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-12": {
+            "1. open": "252.7200",
+            "2. high": "254.8800",
+            "3. low": "252.6700",
+            "4. close": "254.5300",
+            "5. adjusted close": "253.1603",
+            "6. volume": "3080642",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-11": {
+            "1. open": "252.1200",
+            "2. high": "252.3200",
+            "3. low": "250.3500",
+            "4. close": "250.9400",
+            "5. adjusted close": "249.5897",
+            "6. volume": "2677587",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-08": {
+            "1. open": "250.5100",
+            "2. high": "251.3700",
+            "3. low": "249.1299",
+            "4. close": "251.3200",
+            "5. adjusted close": "249.9676",
+            "6. volume": "2942716",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-07": {
+            "1. open": "252.4000",
+            "2. high": "253.3400",
+            "3. low": "250.1700",
+            "4. close": "251.9000",
+            "5. adjusted close": "250.5445",
+            "6. volume": "3884789",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-06": {
+            "1. open": "253.6300",
+            "2. high": "254.3500",
+            "3. low": "253.0500",
+            "4. close": "253.8700",
+            "5. adjusted close": "252.5039",
+            "6. volume": "1913464",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-05": {
+            "1. open": "253.3599",
+            "2. high": "254.2000",
+            "3. low": "252.8100",
+            "4. close": "253.9600",
+            "5. adjusted close": "252.5934",
+            "6. volume": "3090516",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-04": {
+            "1. open": "250.4300",
+            "2. high": "252.3500",
+            "3. low": "249.6800",
+            "4. close": "252.3200",
+            "5. adjusted close": "250.9622",
+            "6. volume": "2576093",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-02-01": {
+            "1. open": "250.6700",
+            "2. high": "251.8500",
+            "3. low": "249.7500",
+            "4. close": "250.4800",
+            "5. adjusted close": "249.1321",
+            "6. volume": "3971387",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-31": {
+            "1. open": "248.9500",
+            "2. high": "250.4300",
+            "3. low": "248.3400",
+            "4. close": "250.1200",
+            "5. adjusted close": "248.7741",
+            "6. volume": "5649631",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-30": {
+            "1. open": "248.4100",
+            "2. high": "251.0000",
+            "3. low": "247.7800",
+            "4. close": "250.1800",
+            "5. adjusted close": "248.8338",
+            "6. volume": "5686150",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-29": {
+            "1. open": "245.3500",
+            "2. high": "246.6500",
+            "3. low": "244.9500",
+            "4. close": "245.7100",
+            "5. adjusted close": "244.3878",
+            "6. volume": "2432929",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-28": {
+            "1. open": "244.7300",
+            "2. high": "245.2300",
+            "3. low": "243.1400",
+            "4. close": "245.1000",
+            "5. adjusted close": "243.7811",
+            "6. volume": "3560319",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-25": {
+            "1. open": "247.3900",
+            "2. high": "248.5500",
+            "3. low": "246.6800",
+            "4. close": "247.3900",
+            "5. adjusted close": "246.0588",
+            "6. volume": "4110560",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-24": {
+            "1. open": "245.4700",
+            "2. high": "246.2000",
+            "3. low": "244.1300",
+            "4. close": "245.4700",
+            "5. adjusted close": "244.1491",
+            "6. volume": "2840417",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-23": {
+            "1. open": "246.1500",
+            "2. high": "246.9200",
+            "3. low": "242.9800",
+            "4. close": "245.7200",
+            "5. adjusted close": "244.3978",
+            "6. volume": "4330334",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-22": {
+            "1. open": "245.3500",
+            "2. high": "245.7389",
+            "3. low": "242.3500",
+            "4. close": "244.0000",
+            "5. adjusted close": "242.6870",
+            "6. volume": "5218505",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-18": {
+            "1. open": "245.6500",
+            "2. high": "247.4000",
+            "3. low": "244.5100",
+            "4. close": "247.0500",
+            "5. adjusted close": "245.7206",
+            "6. volume": "5393151",
+            "7. dividend amount": "0.1739",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-17": {
+            "1. open": "241.2300",
+            "2. high": "244.8100",
+            "3. low": "241.0400",
+            "4. close": "243.8000",
+            "5. adjusted close": "242.3175",
+            "6. volume": "4108399",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-16": {
+            "1. open": "241.3550",
+            "2. high": "242.9000",
+            "3. low": "241.1400",
+            "4. close": "241.8600",
+            "5. adjusted close": "240.3893",
+            "6. volume": "3718529",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-15": {
+            "1. open": "238.9400",
+            "2. high": "241.0300",
+            "3. low": "238.8900",
+            "4. close": "240.6400",
+            "5. adjusted close": "239.1767",
+            "6. volume": "3940345",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-14": {
+            "1. open": "237.9300",
+            "2. high": "239.6500",
+            "3. low": "237.6400",
+            "4. close": "238.9400",
+            "5. adjusted close": "237.4871",
+            "6. volume": "2330665",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-11": {
+            "1. open": "238.8700",
+            "2. high": "239.9400",
+            "3. low": "237.9600",
+            "4. close": "239.8800",
+            "5. adjusted close": "238.4214",
+            "6. volume": "2047229",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-10": {
+            "1. open": "237.6400",
+            "2. high": "240.1600",
+            "3. low": "237.0400",
+            "4. close": "240.0000",
+            "5. adjusted close": "238.5406",
+            "6. volume": "3052249",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-09": {
+            "1. open": "238.9319",
+            "2. high": "239.8762",
+            "3. low": "237.7800",
+            "4. close": "238.9200",
+            "5. adjusted close": "237.4672",
+            "6. volume": "4872006",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-08": {
+            "1. open": "237.9400",
+            "2. high": "238.6600",
+            "3. low": "235.7900",
+            "4. close": "237.9200",
+            "5. adjusted close": "236.4733",
+            "6. volume": "4845828",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-07": {
+            "1. open": "234.8400",
+            "2. high": "236.8800",
+            "3. low": "232.9510",
+            "4. close": "235.3600",
+            "5. adjusted close": "233.9288",
+            "6. volume": "5101599",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-04": {
+            "1. open": "230.0000",
+            "2. high": "235.1800",
+            "3. low": "229.7300",
+            "4. close": "234.2800",
+            "5. adjusted close": "232.8554",
+            "6. volume": "7343729",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-03": {
+            "1. open": "231.2500",
+            "2. high": "231.4200",
+            "3. low": "226.3604",
+            "4. close": "226.7200",
+            "5. adjusted close": "225.3414",
+            "6. volume": "7350173",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2019-01-02": {
+            "1. open": "229.2700",
+            "2. high": "234.0000",
+            "3. low": "229.1400",
+            "4. close": "233.3600",
+            "5. adjusted close": "231.9410",
+            "6. volume": "5319531",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-31": {
+            "1. open": "232.3300",
+            "2. high": "233.2600",
+            "3. low": "231.0500",
+            "4. close": "233.2000",
+            "5. adjusted close": "231.7820",
+            "6. volume": "5079611",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-28": {
+            "1. open": "232.7100",
+            "2. high": "233.8100",
+            "3. low": "229.6700",
+            "4. close": "230.4800",
+            "5. adjusted close": "229.0785",
+            "6. volume": "7267146",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-27": {
+            "1. open": "225.5400",
+            "2. high": "231.3700",
+            "3. low": "222.5304",
+            "4. close": "231.2600",
+            "5. adjusted close": "229.8538",
+            "6. volume": "7952030",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-26": {
+            "1. open": "219.1900",
+            "2. high": "228.7400",
+            "3. low": "216.9700",
+            "4. close": "228.7100",
+            "5. adjusted close": "227.3193",
+            "6. volume": "9761070",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-24": {
+            "1. open": "222.5000",
+            "2. high": "223.3100",
+            "3. low": "217.8800",
+            "4. close": "218.1000",
+            "5. adjusted close": "216.7738",
+            "6. volume": "7023992",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-21": {
+            "1. open": "229.0100",
+            "2. high": "232.4700",
+            "3. low": "223.8500",
+            "4. close": "224.0900",
+            "5. adjusted close": "222.7274",
+            "6. volume": "10242652",
+            "7. dividend amount": "0.6159",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-20": {
+            "1. open": "232.5900",
+            "2. high": "233.3700",
+            "3. low": "226.9500",
+            "4. close": "228.8900",
+            "5. adjusted close": "226.8746",
+            "6. volume": "11912832",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-19": {
+            "1. open": "237.5500",
+            "2. high": "241.2000",
+            "3. low": "232.0700",
+            "4. close": "233.4200",
+            "5. adjusted close": "231.3647",
+            "6. volume": "9545684",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-18": {
+            "1. open": "238.4400",
+            "2. high": "239.8100",
+            "3. low": "235.6700",
+            "4. close": "237.3600",
+            "5. adjusted close": "235.2700",
+            "6. volume": "5349647",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-17": {
+            "1. open": "240.0400",
+            "2. high": "241.4000",
+            "3. low": "235.0500",
+            "4. close": "236.4300",
+            "5. adjusted close": "234.3482",
+            "6. volume": "7036736",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-14": {
+            "1. open": "244.0600",
+            "2. high": "244.8300",
+            "3. low": "240.8200",
+            "4. close": "241.4200",
+            "5. adjusted close": "239.2943",
+            "6. volume": "6591173",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-13": {
+            "1. open": "246.4200",
+            "2. high": "247.8600",
+            "3. low": "245.1700",
+            "4. close": "246.2700",
+            "5. adjusted close": "244.1016",
+            "6. volume": "4455325",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-12": {
+            "1. open": "247.3900",
+            "2. high": "248.7600",
+            "3. low": "245.6500",
+            "4. close": "245.8800",
+            "5. adjusted close": "243.7150",
+            "6. volume": "3734799",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-11": {
+            "1. open": "248.4441",
+            "2. high": "248.5000",
+            "3. low": "242.6600",
+            "4. close": "244.2300",
+            "5. adjusted close": "242.0796",
+            "6. volume": "5646473",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-10": {
+            "1. open": "243.9400",
+            "2. high": "245.4900",
+            "3. low": "239.2500",
+            "4. close": "244.7100",
+            "5. adjusted close": "242.5553",
+            "6. volume": "6020995",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-07": {
+            "1. open": "249.6600",
+            "2. high": "251.4081",
+            "3. low": "243.2900",
+            "4. close": "244.3100",
+            "5. adjusted close": "242.1589",
+            "6. volume": "5963661",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-06": {
+            "1. open": "246.3600",
+            "2. high": "249.8700",
+            "3. low": "242.8200",
+            "4. close": "249.7200",
+            "5. adjusted close": "247.5212",
+            "6. volume": "8232779",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-04": {
+            "1. open": "257.6400",
+            "2. high": "258.0400",
+            "3. low": "250.3800",
+            "4. close": "250.7300",
+            "5. adjusted close": "248.5223",
+            "6. volume": "5376856",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-12-03": {
+            "1. open": "260.1700",
+            "2. high": "260.3000",
+            "3. low": "257.0200",
+            "4. close": "258.7300",
+            "5. adjusted close": "256.4519",
+            "6. volume": "9519917",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-11-30": {
+            "1. open": "253.1000",
+            "2. high": "255.8400",
+            "3. low": "252.8300",
+            "4. close": "255.5100",
+            "5. adjusted close": "253.2602",
+            "6. volume": "2991751",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-11-29": {
+            "1. open": "253.6000",
+            "2. high": "254.9732",
+            "3. low": "252.2200",
+            "4. close": "253.5900",
+            "5. adjusted close": "251.3571",
+            "6. volume": "3471063",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-11-28": {
+            "1. open": "249.1200",
+            "2. high": "253.8400",
+            "3. low": "248.5860",
+            "4. close": "253.8400",
+            "5. adjusted close": "251.6049",
+            "6. volume": "5132498",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        },
+        "2018-11-27": {
+            "1. open": "245.1800",
+            "2. high": "247.5300",
+            "3. low": "244.1400",
+            "4. close": "247.5000",
+            "5. adjusted close": "245.3208",
+            "6. volume": "2932026",
+            "7. dividend amount": "0.0000",
+            "8. split coefficient": "1.0000"
+        }
+    }
+}

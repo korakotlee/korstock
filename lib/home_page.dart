@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_candlesticks/flutter_candlesticks.dart';
 import 'package:korstock/quote.dart';
+import 'package:korstock/background.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -11,46 +12,48 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // String s = Quote.getFile();
+  // var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final int n = 20; // number of bars
+  final threshold = 1.0;
+
   List<Map<String, dynamic>> quotes;
-  List sampleData = [
-    {"open": 50.0, "high": 100.0, "low": 40.0, "close": 80, "volumeto": 5000.0},
-    {"open": 80.0, "high": 90.0, "low": 55.0, "close": 65, "volumeto": 4000.0},
-    {"open": 65.0, "high": 120.0, "low": 60.0, "close": 90, "volumeto": 7000.0},
-    {"open": 90.0, "high": 95.0, "low": 85.0, "close": 80, "volumeto": 2000.0},
-    {"open": 80.0, "high": 85.0, "low": 40.0, "close": 50, "volumeto": 3000.0},
-    {"open": 50.0, "high": 100.0, "low": 40.0, "close": 80, "volumeto": 5000.0},
-    {"open": 80.0, "high": 90.0, "low": 55.0, "close": 65, "volumeto": 4000.0},
-    {"open": 65.0, "high": 120.0, "low": 60.0, "close": 90, "volumeto": 7000.0},
-    {"open": 90.0, "high": 95.0, "low": 85.0, "close": 80, "volumeto": 2000.0},
-    {"open": 80.0, "high": 85.0, "low": 40.0, "close": 50, "volumeto": 3000.0},
-    {"open": 50.0, "high": 100.0, "low": 40.0, "close": 80, "volumeto": 5000.0},
-    {"open": 80.0, "high": 90.0, "low": 55.0, "close": 65, "volumeto": 4000.0},
-    {"open": 65.0, "high": 120.0, "low": 60.0, "close": 90, "volumeto": 7000.0},
-    {"open": 90.0, "high": 95.0, "low": 70.0, "close": 80, "volumeto": 2000.0},
-    {"open": 70.0, "high": 100.0, "low": 50.0, "close": 50, "volumeto": 3000.0},
-    {"open": 70.0, "high": 100.0, "low": 50.0, "close": 50, "volumeto": 3000.0},
-  ];
+  int begin;
+  int coins;
 
   @override
   void initState() {
-    // Quote.getQuote().then((result) {
+    super.initState();
+    begin = 0;
+    coins = 100;
     Quote.getQuoteMap().then((result) {
       setState(() {
-        quotes = result;
+        this.quotes = result;
+        debugPrint(result.length.toString());
       });
     });
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     setLandscape();
     return new Scaffold(
+      key: _scaffoldKey,
         body: SafeArea(
-      child: Stack(
-          children: <Widget>[bg("KorStock"), candle(), coins(), buttons()]),
+      child: Builder(
+        builder: (context) => Stack(children: <Widget>[
+          Background("KorStock"),
+          candle(),
+          coinsWidget(),
+          buttons()
+        ]),
+      ),
     ));
+  }
+
+  void _showSnackBar(String text) {
+    final snackBar = SnackBar( content: Text(text), duration: Duration(milliseconds: 500),);
+    _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
   Widget buttons() {
@@ -72,7 +75,9 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(color: Colors.white),
                       ),
                       shape: StadiumBorder(),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() => doBuy());
+                      },
                     ),
                   ),
                   ButtonTheme(
@@ -85,7 +90,9 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(color: Colors.white),
                       ),
                       shape: StadiumBorder(),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() => doHold());
+                      },
                     ),
                   ),
                   ButtonTheme(
@@ -98,25 +105,148 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(color: Colors.white),
                       ),
                       shape: StadiumBorder(),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() => doSell() );
+                      },
                     ),
                   ),
                 ])));
   }
 
-  Widget coins() {
+  void _checkCandle() {
+    double dojiSize = 0.05;
+    int last = begin + n - 2;
+    // var close = quotes[last];
+    var close1 = quotes[last + 1];
+    bool doji = ((close1['open'] - close1['close']).abs() <= (close1['high'] - close1['low']) * dojiSize);
+    if (doji) _showSnackBar('doji');
+    
+// data2=(close[2] > open[2] and min(open[1], close[1]) > close[2] and open < min(open[1], close[1]) and close < open )
+// plotshape(data2, title= "Evening Star", color=red, style=shape.arrowdown, text="Evening\nStar")
+
+// data3=(close[2] < open[2] and max(open[1], close[1]) < close[2] and open > max(open[1], close[1]) and close > open )
+// plotshape(data3,  title= "Morning Star", location=location.belowbar, color=lime, style=shape.arrowup, text="Morning\nStar")
+
+// data4=(open[1] < close[1] and open > close[1] and high - max(open, close) >= abs(open - close) * 3 and min(close, open) - low <= abs(open - close))
+// plotshape(data4, title= "Shooting Star", color=red, style=shape.arrowdown, text="Shooting\nStar")
+
+// data5=(((high - low)>3*(open -close)) and  ((close - low)/(.001 + high - low) > 0.6) and ((open - low)/(.001 + high - low) > 0.6))
+// plotshape(data5, title= "Hammer", location=location.belowbar, color=white, style=shape.diamond, text="H")
+
+// data5b=(((high - low)>3*(open -close)) and  ((high - close)/(.001 + high - low) > 0.6) and ((high - open)/(.001 + high - low) > 0.6))
+// plotshape(data5b, title= "Inverted Hammer", location=location.belowbar, color=white, style=shape.diamond, text="IH")
+
+
+// data6=(close[1] > open[1] and open > close and open <= close[1] and open[1] <= close and open - close < close[1] - open[1] )
+// plotshape(data6, title= "Bearish Harami",  color=red, style=shape.arrowdown, text="Bearish\nHarami")
+
+// data7=(open[1] > close[1] and close > open and close <= open[1] and close[1] <= open and close - open < open[1] - close[1] )
+// plotshape(data7,  title= "Bullish Harami", location=location.belowbar, color=lime, style=shape.arrowup, text="Bullish\nHarami")
+
+// data8=(close[1] > open[1] and open > close and open >= close[1] and open[1] >= close and open - close > close[1] - open[1] )
+// plotshape(data8,  title= "Bearish Engulfing", color=red, style=shape.arrowdown, text="Bearish\nEngulfing")
+
+// data9=(open[1] > close[1] and close > open and close >= open[1] and close[1] >= open and close - open > open[1] - close[1] )
+// plotshape(data9, title= "Bullish Engulfing", location=location.belowbar, color=lime, style=shape.arrowup, text="Bullish\nEngulfling")
+
+// upper = highest(10)[1]
+// data10=(close[1] < open[1] and  open < low[1] and close > close[1] + ((open[1] - close[1])/2) and close < open[1])
+// plotshape(data10, title= "Piercing Line", location=location.belowbar, color=lime, style=shape.arrowup, text="Piercing\nLine")
+
+// lower = lowest(10)[1]
+// data11=(low == open and  open < lower and open < close and close > ((high[1] - low[1]) / 2) + low[1])
+// plotshape(data11, title= "Bullish Belt", location=location.belowbar, color=lime, style=shape.arrowup, text="Bullish\nBelt")
+
+// data12=(open[1]>close[1] and open>=open[1] and close>open)
+// plotshape(data12, title= "Bullish Kicker", location=location.belowbar, color=lime, style=shape.arrowup, text="Bullish\nKicker")
+
+// data13=(open[1]<close[1] and open<=open[1] and close<=open)
+// plotshape(data13, title= "Bearish Kicker", color=red, style=shape.arrowdown, text="Bearish\nKicker")
+
+// data14=(((high-low>4*(open-close))and((close-low)/(.001+high-low)>=0.75)and((open-low)/(.001+high-low)>=0.75)) and high[1] < open and high[2] < open)
+// plotshape(data14,  title= "Hanging Man", color=red, style=shape.arrowdown, text="Hanging\nMan")
+
+// data15=((close[1]>open[1])and(((close[1]+open[1])/2)>close)and(open>close)and(open>close[1])and(close>open[1])and((open-close)/(.001+(high-low))>0.6))
+// plotshape(data15, title= "Dark Cloud Cover", color=red, style=shape.arrowdown, text="Dark\nCloudCover")
+
+
+  }
+
+  void doBuy() {
+    int score = 0;
+    double changes = getChange();
+
+    _checkCandle();
+    if (changes >= threshold) {
+      score = 2;
+    } else if (changes > -threshold) {
+      score = -1;
+    } else {
+      score = -2;
+    }
+    begin++;
+    if (begin > quotes.length - n) {
+      begin = 0;
+      score = 0;
+      _showSnackBar('Data reset');
+    }
+    coins += score;
+  }
+
+  void doHold() {
+    _checkCandle();
+    begin++;
+    if (begin > quotes.length - n) {
+      begin = 0;
+      _showSnackBar('Data reset');
+    }
+  }
+
+  void doSell() {
+    int score = 0;
+    double changes = getChange();
+
+    _checkCandle();
+    if (changes >= threshold) {
+      score = -2;
+    } else if (changes > -threshold) {
+      score = -1;
+    } else {
+      score = 2;
+    }
+    begin++;
+    if (begin > quotes.length - n) {
+      begin = 0;
+      score = 0;
+      _showSnackBar('Data reset');
+    }
+    coins += score;
+  }
+
+  double getChange() {
+    int last = begin + n - 2;
+    var close = quotes[last];
+    var close1 = quotes[last + 1];
+    return (close1['close'] - close['close']) / close['close'] * 100;
+  }
+
+  Widget coinsWidget() {
     return Positioned(
         right: 20.0,
         top: 5.0,
         child: Row(children: <Widget>[
           Image.asset('img/coin.png', width: 40.0),
-          Text('  coins: 100',
+          Text('  coins: $coins',
               style: TextStyle(
                   fontSize: 18, fontFamily: "Bitter", color: Color(0xff308eab)))
         ]));
   }
 
   Widget candle() {
+    if (quotes == null) {
+      return Container();
+    }
+    int end = begin + n - 1;
     return Row(
       children: <Widget>[
         Expanded(
@@ -125,8 +255,9 @@ class _HomePageState extends State<HomePage> {
             child: OHLCVGraph(
                 increaseColor: Colors.greenAccent,
                 decreaseColor: Colors.redAccent,
-                data: sampleData,
+                data: this.quotes.sublist(begin, end),
                 enableGridLines: true,
+                labelPrefix: '',
                 volumeProp: 0.2),
           ),
         ),
@@ -135,29 +266,6 @@ class _HomePageState extends State<HomePage> {
         )
       ],
     );
-  }
-
-  Widget bg(text) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    return Container(
-        width: width,
-        height: height - 25,
-        child: Text(text,
-            style: TextStyle(
-                fontSize: 36, fontFamily: "Megrim", color: Colors.white)),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.1, 0.9],
-            colors: [
-              Colors.amberAccent,
-              Color(0xffF5F8FA),
-              // Colors.brown,
-            ],
-          ),
-        ));
   }
 
   void setLandscape() {

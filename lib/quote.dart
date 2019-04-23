@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/services.dart' show rootBundle;
 
 class Quote {
@@ -20,7 +19,7 @@ class Quote {
   double get vol => _vol;
 
   static Future<String> _getFile() async {
-    String content = await rootBundle.loadString("assets/query.json");
+    String content = await rootBundle.loadString("assets/spy.json");
     return content;
   }
 
@@ -57,10 +56,10 @@ class Quote {
       double vol = double.parse(v['6. volume']);
       q = {
         "open": open,
-        "hi": hi,
-        "lo": lo,
+        "high": hi,
+        "low": lo,
         "close": close,
-        "vol": vol,
+        "volumeto": vol,
         "qDate": qDate,
       };
       quotes.add(q);
