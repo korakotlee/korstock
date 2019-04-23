@@ -20,7 +20,7 @@ class Quote {
   double get vol => _vol;
 
   static Future<String> _getFile() async {
-    String content = await rootBundle.loadString("assets/query.json");
+    String content = await rootBundle.loadString("assets/spy.json");
     return content;
   }
 
