@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Landscape Layout Example',
+      title: 'KorStock',
       theme: new ThemeData(
         primaryColor: const Color(0xFF43a047),
         accentColor: const Color(0xFFffcc00),
