@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_candlesticks/flutter_candlesticks.dart';
 import 'package:korstock/quote.dart';
+import 'package:korstock/background.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -31,7 +32,7 @@ class _HomePageState extends State<HomePage> {
     return new Scaffold(
         body: SafeArea(
       child: Stack(
-          children: <Widget>[bg("KorStock"), candle(), coins(), buttons()]),
+          children: <Widget>[Background("KorStock"), candle(), coins(), buttons()]),
     ));
   }
 
@@ -133,30 +134,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget bg(text) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    return Container(
-        width: width,
-        height: height - 25,
-        child: Text(text,
-            style: TextStyle(
-                fontSize: 36, fontFamily: "Megrim", color: Colors.white)),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: [0.1, 0.9],
-            colors: [
-              Colors.amberAccent,
-              Color(0xffF5F8FA),
-            ],
-          ),
-        ));
-  }
 
   void setLandscape() {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
   }
 }
+
