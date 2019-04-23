@@ -12,6 +12,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   List<Map<String, dynamic>> quotes;
   int n = 20;
   int begin;
@@ -34,14 +37,23 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     setLandscape();
     return new Scaffold(
+      key: _scaffoldKey,
         body: SafeArea(
-      child: Stack(children: <Widget>[
-        Background("KorStock"),
-        candle(),
-        coinsWidget(),
-        buttons()
-      ]),
+      child: Builder(
+        builder: (context) => Stack(children: <Widget>[
+          Background("KorStock"),
+          candle(),
+          coinsWidget(),
+          buttons()
+        ]),
+      ),
     ));
+  }
+
+  void _showSnackBar(String text) {
+    final snackBar = SnackBar( content: Text(text), );
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+    // Scaffold.of(context).showSnackBar(snackBar);
   }
 
   Widget buttons() {
@@ -115,6 +127,7 @@ class _HomePageState extends State<HomePage> {
     if (begin > quotes.length - n) {
       begin = 0;
       score = 0;
+      _showSnackBar('Data reset');
     }
     coins += score;
   }
@@ -123,6 +136,7 @@ class _HomePageState extends State<HomePage> {
     begin++;
     if (begin > quotes.length - n) {
       begin = 0;
+      _showSnackBar('Data reset');
     }
   }
 
@@ -140,6 +154,7 @@ class _HomePageState extends State<HomePage> {
     if (begin > quotes.length - n) {
       begin = 0;
       score = 0;
+      _showSnackBar('Data reset');
     }
     coins += score;
   }
@@ -167,7 +182,6 @@ class _HomePageState extends State<HomePage> {
     if (quotes == null) {
       return Container();
     }
-    // debugPrint(quotes[0]['qDate']);
     int end = begin + n - 1;
     return Row(
       children: <Widget>[
