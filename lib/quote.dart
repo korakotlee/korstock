@@ -57,10 +57,10 @@ class Quote {
       double vol = double.parse(v['6. volume']);
       q = {
         "open": open,
-        "hi": hi,
-        "lo": lo,
+        "high": hi,
+        "low": lo,
         "close": close,
-        "vol": vol,
+        "volumeto": vol,
         "qDate": qDate,
       };
       quotes.add(q);
