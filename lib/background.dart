@@ -12,9 +12,12 @@ class Background extends StatelessWidget {
     return Container(
         width: width,
         height: height - 25,
-        child: Text(text,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Text(text,
             style: TextStyle(
-                fontSize: 36, fontFamily: "Megrim", color: Colors.white)),
+              fontSize: 48, fontFamily: "Megrim", color: Colors.white)),
+        ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,

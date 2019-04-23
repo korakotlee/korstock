@@ -14,10 +14,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> quotes;
   int n = 20;
+  int begin;
+  int coins;
 
   @override
   void initState() {
     super.initState();
+    begin = 0;
+    coins = 100;
     Quote.getQuoteMap().then((result) {
       setState(() {
         this.quotes = result;
@@ -31,8 +35,12 @@ class _HomePageState extends State<HomePage> {
     setLandscape();
     return new Scaffold(
         body: SafeArea(
-      child: Stack(
-          children: <Widget>[Background("KorStock"), candle(), coins(), buttons()]),
+      child: Stack(children: <Widget>[
+        Background("KorStock"),
+        candle(),
+        coinsWidget(),
+        buttons()
+      ]),
     ));
   }
 
@@ -56,12 +64,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       shape: StadiumBorder(),
                       onPressed: () {
-                        Quote.getQuoteMap().then((result) {
-                          setState(() {
-                            this.quotes = result;
-                            debugPrint(result.length.toString());
-                          });
-                        });
+                        setState(() => doBuy());
                       },
                     ),
                   ),
@@ -75,7 +78,9 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(color: Colors.white),
                       ),
                       shape: StadiumBorder(),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() => doHold());
+                      },
                     ),
                   ),
                   ButtonTheme(
@@ -88,19 +93,71 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(color: Colors.white),
                       ),
                       shape: StadiumBorder(),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() => doSell() );
+                      },
                     ),
                   ),
                 ])));
   }
 
-  Widget coins() {
+  void doBuy() {
+    int score = 0;
+    double changes = getChange();
+    if (changes >= 2.0) {
+      score = 2;
+    } else if (changes > -2) {
+      score = -1;
+    } else {
+      score = -2;
+    }
+    begin++;
+    if (begin > quotes.length - n) {
+      begin = 0;
+      score = 0;
+    }
+    coins += score;
+  }
+
+  void doHold() {
+    begin++;
+    if (begin > quotes.length - n) {
+      begin = 0;
+    }
+  }
+
+  void doSell() {
+    int score = 0;
+    double changes = getChange();
+    if (changes >= 2.0) {
+      score = -2;
+    } else if (changes > -2) {
+      score = -1;
+    } else {
+      score = 2;
+    }
+    begin++;
+    if (begin > quotes.length - n) {
+      begin = 0;
+      score = 0;
+    }
+    coins += score;
+  }
+
+  double getChange() {
+    int last = begin + n - 2;
+    var close = quotes[last];
+    var close1 = quotes[last + 1];
+    return (close1['close'] - close['close']) / close['close'] * 100;
+  }
+
+  Widget coinsWidget() {
     return Positioned(
         right: 20.0,
         top: 5.0,
         child: Row(children: <Widget>[
           Image.asset('img/coin.png', width: 40.0),
-          Text('  coins: 100',
+          Text('  coins: $coins',
               style: TextStyle(
                   fontSize: 18, fontFamily: "Bitter", color: Color(0xff308eab)))
         ]));
@@ -110,9 +167,8 @@ class _HomePageState extends State<HomePage> {
     if (quotes == null) {
       return Container();
     }
-    debugPrint(quotes[0]['qDate']);
-    int begin = 0;
-    int end = begin + n;
+    // debugPrint(quotes[0]['qDate']);
+    int end = begin + n - 1;
     return Row(
       children: <Widget>[
         Expanded(
@@ -134,10 +190,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-
   void setLandscape() {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
   }
 }
-
