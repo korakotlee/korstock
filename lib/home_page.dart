@@ -1,4 +1,4 @@
-import 'dart:math';
+// import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +6,7 @@ import 'package:flutter_candlesticks/flutter_candlesticks.dart';
 import 'package:korstock/pattern.dart';
 import 'package:korstock/quote.dart';
 import 'package:korstock/background.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -20,8 +21,8 @@ class _HomePageState extends State<HomePage> {
   final threshold = 0.5;
 
   List<Map<String, dynamic>> quotes;
-  int begin;
-  int coins;
+  int begin = 0;
+  int coins = 100;
   int last;
   double price;
   double change;
@@ -29,10 +30,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    begin = 0;
-    last = begin + n -2;
+    getSharedPrefs();
+    //   begin = 0;
+    // coins = 100;
     change = 0;
-    coins = 100;
     Quote.getQuoteMap().then((result) {
       setState(() {
         this.quotes = result.reversed.toList();
@@ -58,6 +59,22 @@ class _HomePageState extends State<HomePage> {
                 ]),
           ),
         ));
+  }
+
+  Future<Null> setSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt("coins", coins);
+    prefs.setInt("begin", begin);
+  }
+
+  Future<Null> getSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int result;
+    result = prefs.getInt("coins");
+    if (result != null) coins = result;
+    result = prefs.getInt("begin");
+    if (result != null) begin = result;
+    last = begin + n - 2;
   }
 
   void _showSnackBar(String text, Color color) {
@@ -132,10 +149,10 @@ class _HomePageState extends State<HomePage> {
     return Positioned(
       right: 150,
       bottom: 100,
-      child: Text('$price (${change.toStringAsFixed(2)}%)', style: TextStyle(
-        fontFamily: "Bitter",
-        fontSize: 18.0
-      ),),
+      child: Text(
+        '$price (${change.toStringAsFixed(2)}%)',
+        style: TextStyle(fontFamily: "Bitter", fontSize: 18.0),
+      ),
     );
   }
 
@@ -217,11 +234,9 @@ class _HomePageState extends State<HomePage> {
     int last = begin + n - 2;
     var q1 = quotes[last];
     var q = quotes[last + 1];
-    double changes =  (q['close'] - q1['close']) / q1['close'] * 100;
-    // setState(() {
-      change = changes;
-    // });
-    // debugPrint(changes.toString());
+    double changes = (q['close'] - q1['close']) / q1['close'] * 100;
+    change = changes;
+    setSharedPrefs();
     return changes;
   }
 
