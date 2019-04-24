@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   // var _scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final int n = 20; // number of bars
-  final threshold = 1.0;
+  final threshold = 0.75;
 
   List<Map<String, dynamic>> quotes;
   int begin;
@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
     coins = 100;
     Quote.getQuoteMap().then((result) {
       setState(() {
-        this.quotes = result;
+        this.quotes = result.reversed.toList();
         debugPrint(result.length.toString());
       });
     });
@@ -198,8 +198,8 @@ class _HomePageState extends State<HomePage> {
         right: 20.0,
         top: 5.0,
         child: Row(children: <Widget>[
-          Image.asset('img/coin.png', width: 40.0),
-          Text('  coins: $coins',
+          Image.asset('img/coin.png', width: 30.0),
+          Text(' : $coins',
               style: TextStyle(
                   fontSize: 18, fontFamily: "Bitter", color: Color(0xff308eab)))
         ]));
@@ -216,8 +216,8 @@ class _HomePageState extends State<HomePage> {
           child: Padding(
             padding: EdgeInsets.only(top: 30.0, bottom: 10.0, left: 10.0),
             child: OHLCVGraph(
-                increaseColor: Colors.greenAccent,
-                decreaseColor: Colors.redAccent,
+                increaseColor: Color(0xff53B987),
+                decreaseColor: Color(0xffEB4D5C),
                 data: this.quotes.sublist(begin, end),
                 enableGridLines: true,
                 labelPrefix: '',
