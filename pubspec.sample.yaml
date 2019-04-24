@@ -6,6 +6,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  shared_preferences: ^0.4.3
   flutter_candlesticks:
     path: /home/korakot/apps/flutter-candlesticks
   flutter:
@@ -13,8 +14,18 @@ dependencies:
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.7.0"
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  # ios: true
+  android: true
+  # image_path_ios: "img/coin.png"
+  image_path: "img/coin.png"
+  # adaptive_icon_background: "assets/launcher/background.png"
+  # adaptive_icon_foreground: "assets/launcher/foreground.png"
+
 flutter:
   uses-material-design: true
 

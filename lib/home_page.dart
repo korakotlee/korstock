@@ -1,4 +1,4 @@
-import 'dart:math';
+// import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +6,7 @@ import 'package:flutter_candlesticks/flutter_candlesticks.dart';
 import 'package:korstock/pattern.dart';
 import 'package:korstock/quote.dart';
 import 'package:korstock/background.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -15,24 +16,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // var _scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final int n = 20; // number of bars
-  final threshold = 1.0;
+  final threshold = 0.5;
 
   List<Map<String, dynamic>> quotes;
-  int begin;
-  int coins;
+  int begin = 0;
+  int coins = 100;
+  int last;
+  double price;
+  double change;
 
   @override
   void initState() {
     super.initState();
-    begin = 0;
-    coins = 100;
+    getSharedPrefs();
+    setSharedPrefs();
+    //   begin = 0;
+    // coins = 100;
+    change = 0;
     Quote.getQuoteMap().then((result) {
       setState(() {
-        this.quotes = result;
-        debugPrint(result.length.toString());
+        this.quotes = result.reversed.toList();
+        price = quotes[last]['close'];
+        // debugPrint(result.length.toString());
       });
     });
   }
@@ -48,10 +55,33 @@ class _HomePageState extends State<HomePage> {
                   Background("KorStock"),
                   candle(),
                   coinsWidget(),
-                  buttons()
+                  buttons(),
+                  showPrice(),
                 ]),
           ),
         ));
+  }
+
+  Future<Null> setSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt("coins", coins);
+    prefs.setInt("begin", begin);
+  }
+
+  Future<Null> getSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int result;
+    result = prefs.getInt("coins");
+    if (result != null)
+      coins = result;
+    else
+      coins = 100;
+    result = prefs.getInt("begin");
+    if (result != null)
+      begin = result;
+    else
+      begin = 0;
+    last = begin + n - 2;
   }
 
   void _showSnackBar(String text, Color color) {
@@ -122,12 +152,24 @@ class _HomePageState extends State<HomePage> {
                 ])));
   }
 
+  Widget showPrice() {
+    return Positioned(
+      right: 150,
+      bottom: 100,
+      child: Text(
+        '$price (${change.toStringAsFixed(2)}%)',
+        style: TextStyle(fontFamily: "Bitter", fontSize: 18.0),
+      ),
+    );
+  }
+
   void _checkCandle() {
     // bool pattern;
-    int last = begin + n - 2;
+    last = begin + n - 2;
     var q = quotes[last + 1]; // new bar
     var q1 = quotes[last]; // current bar
     var q2 = quotes[last - 1]; // previous bar
+    price = q['close'];
     List<Pattern> results = detectPattern(q, q1, q2);
 
     results.forEach((result) {
@@ -138,15 +180,22 @@ class _HomePageState extends State<HomePage> {
   void doBuy() {
     int score = 0;
     double changes = getChange();
+    score = changes.round();
 
     _checkCandle();
-    if (changes >= threshold) {
-      score = 2;
-    } else if (changes > -threshold) {
-      score = -1;
-    } else {
-      score = -2;
-    }
+    // if (changes >= threshold) {
+    //   score = 1;
+    // } else if (changes > -threshold) {
+    //   score = 0;
+    // } else {
+    //   score = -1;
+    // }
+    // int last = begin + n - 2;
+    // var q1 = quotes[last];
+    // var q = quotes[last + 1];
+    // debugPrint('score: $score');
+    // debugPrint('new: ${q['close']}, last: ${q1['close']} changes: $changes');
+
     begin++;
     if (begin > quotes.length - n) {
       begin = 0;
@@ -158,6 +207,7 @@ class _HomePageState extends State<HomePage> {
 
   void doHold() {
     _checkCandle();
+    getChange();
     begin++;
     if (begin > quotes.length - n) {
       begin = 0;
@@ -168,15 +218,16 @@ class _HomePageState extends State<HomePage> {
   void doSell() {
     int score = 0;
     double changes = getChange();
+    score = changes.round();
 
     _checkCandle();
-    if (changes >= threshold) {
-      score = -2;
-    } else if (changes > -threshold) {
-      score = -1;
-    } else {
-      score = 2;
-    }
+    // if (changes >= threshold) {
+    //   score = -1;
+    // } else if (changes > -threshold) {
+    //   score = 0;
+    // } else {
+    //   score = 1;
+    // }
     begin++;
     if (begin > quotes.length - n) {
       begin = 0;
@@ -188,9 +239,12 @@ class _HomePageState extends State<HomePage> {
 
   double getChange() {
     int last = begin + n - 2;
-    var close = quotes[last];
-    var close1 = quotes[last + 1];
-    return (close1['close'] - close['close']) / close['close'] * 100;
+    var q1 = quotes[last];
+    var q = quotes[last + 1];
+    double changes = (q['close'] - q1['close']) / q1['close'] * 100;
+    change = changes;
+    setSharedPrefs();
+    return changes;
   }
 
   Widget coinsWidget() {
@@ -198,8 +252,8 @@ class _HomePageState extends State<HomePage> {
         right: 20.0,
         top: 5.0,
         child: Row(children: <Widget>[
-          Image.asset('img/coin.png', width: 40.0),
-          Text('  coins: $coins',
+          Image.asset('img/coin.png', width: 30.0),
+          Text(' : $coins',
               style: TextStyle(
                   fontSize: 18, fontFamily: "Bitter", color: Color(0xff308eab)))
         ]));
@@ -216,8 +270,8 @@ class _HomePageState extends State<HomePage> {
           child: Padding(
             padding: EdgeInsets.only(top: 30.0, bottom: 10.0, left: 10.0),
             child: OHLCVGraph(
-                increaseColor: Colors.greenAccent,
-                decreaseColor: Colors.redAccent,
+                increaseColor: Color(0xff53B987),
+                decreaseColor: Color(0xffEB4D5C),
                 data: this.quotes.sublist(begin, end),
                 enableGridLines: true,
                 labelPrefix: '',
