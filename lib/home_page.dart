@@ -15,10 +15,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // var _scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final int n = 20; // number of bars
-  final threshold = 0.75;
+  final threshold = 0.5;
 
   List<Map<String, dynamic>> quotes;
   int begin;
@@ -32,7 +31,7 @@ class _HomePageState extends State<HomePage> {
     Quote.getQuoteMap().then((result) {
       setState(() {
         this.quotes = result.reversed.toList();
-        debugPrint(result.length.toString());
+        // debugPrint(result.length.toString());
       });
     });
   }
@@ -138,15 +137,22 @@ class _HomePageState extends State<HomePage> {
   void doBuy() {
     int score = 0;
     double changes = getChange();
+    score = changes.round();
 
     _checkCandle();
-    if (changes >= threshold) {
-      score = 2;
-    } else if (changes > -threshold) {
-      score = -1;
-    } else {
-      score = -2;
-    }
+    // if (changes >= threshold) {
+    //   score = 1;
+    // } else if (changes > -threshold) {
+    //   score = 0;
+    // } else {
+    //   score = -1;
+    // }
+    // int last = begin + n - 2;
+    // var q1 = quotes[last];
+    // var q = quotes[last + 1];
+    // debugPrint('score: $score');
+    // debugPrint('new: ${q['close']}, last: ${q1['close']} changes: $changes');
+
     begin++;
     if (begin > quotes.length - n) {
       begin = 0;
@@ -168,15 +174,16 @@ class _HomePageState extends State<HomePage> {
   void doSell() {
     int score = 0;
     double changes = getChange();
+    score = changes.round();
 
     _checkCandle();
-    if (changes >= threshold) {
-      score = -2;
-    } else if (changes > -threshold) {
-      score = -1;
-    } else {
-      score = 2;
-    }
+    // if (changes >= threshold) {
+    //   score = -1;
+    // } else if (changes > -threshold) {
+    //   score = 0;
+    // } else {
+    //   score = 1;
+    // }
     begin++;
     if (begin > quotes.length - n) {
       begin = 0;
@@ -188,9 +195,11 @@ class _HomePageState extends State<HomePage> {
 
   double getChange() {
     int last = begin + n - 2;
-    var close = quotes[last];
-    var close1 = quotes[last + 1];
-    return (close1['close'] - close['close']) / close['close'] * 100;
+    var q1 = quotes[last];
+    var q = quotes[last + 1];
+    double changes =  (q['close'] - q1['close']) / q1['close'] * 100;
+    debugPrint(changes.toString());
+    return changes;
   }
 
   Widget coinsWidget() {
