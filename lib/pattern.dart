@@ -3,22 +3,21 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Pattern {
-  String _text;
-  Color _color;
-  // String _color;
+  String text;
+  Color color;
 
-  Pattern(this._text, this._color);
+  Pattern(this.text, this.color);
 
-  String get text => _text;
-  Color get color => _color;
+  // String get text => _text;
+  // Color get color => _color;
 
-  set text(String text) {
-    this._text = text;
-  }
+  // set text(String text) {
+  //   this._text = text;
+  // }
 
-  set color(Color color) {
-    this._color = color;
-  }
+  // set color(Color color) {
+  //   this._color = color;
+  // }
 }
 
 List<Pattern> detectPattern(var q, var q1, var q2) {
