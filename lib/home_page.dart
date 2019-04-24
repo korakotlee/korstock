@@ -1,5 +1,3 @@
-// import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_candlesticks/flutter_candlesticks.dart';
@@ -26,20 +24,19 @@ class _HomePageState extends State<HomePage> {
   int last;
   double price;
   double change;
+  String help;
 
   @override
   void initState() {
     super.initState();
     getSharedPrefs();
     setSharedPrefs();
-    //   begin = 0;
-    // coins = 100;
+    rootBundle.loadString("assets/help.txt").then((text) => this.help = text);
     change = 0;
     Quote.getQuoteMap().then((result) {
       setState(() {
         this.quotes = result.reversed.toList();
         price = quotes[last]['close'];
-        // debugPrint(result.length.toString());
       });
     });
   }
@@ -60,6 +57,25 @@ class _HomePageState extends State<HomePage> {
                 ]),
           ),
         ));
+  }
+
+  void showHelp() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Color(0xffFDF6E3),
+            actions: <Widget>[
+              FlatButton(
+                  child: Text('Close'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  })
+            ],
+            title: Text('KorStock'),
+            content: Text(help),
+          );
+        });
   }
 
   Future<Null> setSharedPrefs() async {
@@ -95,61 +111,38 @@ class _HomePageState extends State<HomePage> {
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
+  Widget button(String text, Function action) {
+    return ButtonTheme(
+      minWidth: 88.0,
+      height: 36.0,
+      buttonColor: Colors.indigo,
+      child: RaisedButton(
+        child: Text(
+          text,
+          style: TextStyle(color: Colors.white),
+        ),
+        shape: StadiumBorder(),
+        onPressed: () {
+          setState(() => action());
+        },
+      ),
+    );
+  }
+
   Widget buttons() {
     return Positioned(
-        bottom: 40,
-        right: 10,
-        child: Container(
-            height: 300,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  ButtonTheme(
-                    minWidth: 88.0,
-                    height: 36.0,
-                    buttonColor: Colors.indigo,
-                    child: RaisedButton(
-                      child: Text(
-                        'BUY',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      shape: StadiumBorder(),
-                      onPressed: () {
-                        setState(() => doBuy());
-                      },
-                    ),
-                  ),
-                  ButtonTheme(
-                    minWidth: 88.0,
-                    height: 36.0,
-                    buttonColor: Colors.indigo,
-                    child: RaisedButton(
-                      child: Text(
-                        'HOLD',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      shape: StadiumBorder(),
-                      onPressed: () {
-                        setState(() => doHold());
-                      },
-                    ),
-                  ),
-                  ButtonTheme(
-                    minWidth: 88.0,
-                    height: 36.0,
-                    buttonColor: Colors.indigo,
-                    child: RaisedButton(
-                      child: Text(
-                        'SELL',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      shape: StadiumBorder(),
-                      onPressed: () {
-                        setState(() => doSell());
-                      },
-                    ),
-                  ),
-                ])));
+      bottom: 40,
+      right: 10,
+      child: Container(
+        height: 300,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            button('BUY', doBuy),
+            button('HOLD', doHold),
+            button('SELL', doSell),
+            button('HELP', showHelp),
+          ])));
   }
 
   Widget showPrice() {
@@ -164,14 +157,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _checkCandle() {
-    // bool pattern;
     last = begin + n - 2;
     var q = quotes[last + 1]; // new bar
     var q1 = quotes[last]; // current bar
     var q2 = quotes[last - 1]; // previous bar
     price = q['close'];
     List<Pattern> results = detectPattern(q, q1, q2);
-
     results.forEach((result) {
       _showSnackBar(result.text, result.color);
     });
@@ -183,19 +174,6 @@ class _HomePageState extends State<HomePage> {
     score = changes.round();
 
     _checkCandle();
-    // if (changes >= threshold) {
-    //   score = 1;
-    // } else if (changes > -threshold) {
-    //   score = 0;
-    // } else {
-    //   score = -1;
-    // }
-    // int last = begin + n - 2;
-    // var q1 = quotes[last];
-    // var q = quotes[last + 1];
-    // debugPrint('score: $score');
-    // debugPrint('new: ${q['close']}, last: ${q1['close']} changes: $changes');
-
     begin++;
     if (begin > quotes.length - n) {
       begin = 0;
@@ -221,13 +199,6 @@ class _HomePageState extends State<HomePage> {
     score = changes.round();
 
     _checkCandle();
-    // if (changes >= threshold) {
-    //   score = -1;
-    // } else if (changes > -threshold) {
-    //   score = 0;
-    // } else {
-    //   score = 1;
-    // }
     begin++;
     if (begin > quotes.length - n) {
       begin = 0;
