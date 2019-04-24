@@ -22,15 +22,21 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> quotes;
   int begin;
   int coins;
+  int last;
+  double price;
+  double change;
 
   @override
   void initState() {
     super.initState();
     begin = 0;
+    last = begin + n -2;
+    change = 0;
     coins = 100;
     Quote.getQuoteMap().then((result) {
       setState(() {
         this.quotes = result.reversed.toList();
+        price = quotes[last]['close'];
         // debugPrint(result.length.toString());
       });
     });
@@ -47,7 +53,8 @@ class _HomePageState extends State<HomePage> {
                   Background("KorStock"),
                   candle(),
                   coinsWidget(),
-                  buttons()
+                  buttons(),
+                  showPrice(),
                 ]),
           ),
         ));
@@ -121,12 +128,24 @@ class _HomePageState extends State<HomePage> {
                 ])));
   }
 
+  Widget showPrice() {
+    return Positioned(
+      right: 150,
+      bottom: 100,
+      child: Text('$price (${change.toStringAsFixed(2)}%)', style: TextStyle(
+        fontFamily: "Bitter",
+        fontSize: 18.0
+      ),),
+    );
+  }
+
   void _checkCandle() {
     // bool pattern;
-    int last = begin + n - 2;
+    last = begin + n - 2;
     var q = quotes[last + 1]; // new bar
     var q1 = quotes[last]; // current bar
     var q2 = quotes[last - 1]; // previous bar
+    price = q['close'];
     List<Pattern> results = detectPattern(q, q1, q2);
 
     results.forEach((result) {
@@ -164,6 +183,7 @@ class _HomePageState extends State<HomePage> {
 
   void doHold() {
     _checkCandle();
+    getChange();
     begin++;
     if (begin > quotes.length - n) {
       begin = 0;
@@ -198,7 +218,10 @@ class _HomePageState extends State<HomePage> {
     var q1 = quotes[last];
     var q = quotes[last + 1];
     double changes =  (q['close'] - q1['close']) / q1['close'] * 100;
-    debugPrint(changes.toString());
+    // setState(() {
+      change = changes;
+    // });
+    // debugPrint(changes.toString());
     return changes;
   }
 
