@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     getSharedPrefs();
+    setSharedPrefs();
     //   begin = 0;
     // coins = 100;
     change = 0;
@@ -71,9 +72,15 @@ class _HomePageState extends State<HomePage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int result;
     result = prefs.getInt("coins");
-    if (result != null) coins = result;
+    if (result != null)
+      coins = result;
+    else
+      coins = 100;
     result = prefs.getInt("begin");
-    if (result != null) begin = result;
+    if (result != null)
+      begin = result;
+    else
+      begin = 0;
     last = begin + n - 2;
   }
 
