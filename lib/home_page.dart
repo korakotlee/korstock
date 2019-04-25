@@ -8,6 +8,7 @@ import 'package:korstock/background.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'moving_average.dart';
+import 'ichimoku.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -23,6 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   List<Map<String, dynamic>> quotes;
   List maVol;
+  Map ichimoku;
   int begin = 0;
   int coins = 100;
   int last;
@@ -41,6 +43,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         this.quotes = result.reversed.toList();
         maVol = ma(quotes, 20);
+        ichimoku = ichi(quotes);
         price = quotes[last]['close'];
       });
     });
