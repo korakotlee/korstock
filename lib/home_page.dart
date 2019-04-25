@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Color(0xffFDF6E3),
             actions: <Widget>[
               FlatButton(
-                  child: Text('Close'),
+                  child: Text('OK', style: TextStyle(color: Colors.indigo)),
                   onPressed: () {
                     Navigator.of(context).pop();
                   })
