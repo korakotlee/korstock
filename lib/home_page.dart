@@ -205,7 +205,7 @@ class _HomePageState extends State<HomePage> {
       score = 0;
       _showSnackBar('Data reset', Colors.white);
     }
-    coins += score;
+    coins -= score;
   }
 
   double getChange() {
