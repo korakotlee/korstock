@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_candlesticks/flutter_candlesticks.dart';
+// import 'package:flutter_candlesticks/flutter_candlesticks.dart';
+import 'package:korstock/candle.dart';
 import 'package:korstock/pattern.dart';
 import 'package:korstock/quote.dart';
 import 'package:korstock/background.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'moving_average.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -19,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   final threshold = 0.5;
 
   List<Map<String, dynamic>> quotes;
+  List maVol;
   int begin = 0;
   int coins = 100;
   int last;
@@ -36,6 +40,7 @@ class _HomePageState extends State<HomePage> {
     Quote.getQuoteMap().then((result) {
       setState(() {
         this.quotes = result.reversed.toList();
+        maVol = ma(quotes, 20);
         price = quotes[last]['close'];
       });
     });
@@ -67,7 +72,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Color(0xffFDF6E3),
             actions: <Widget>[
               FlatButton(
-                  child: Text('Close'),
+                  child: Text('OK', style: TextStyle(color: Colors.indigo)),
                   onPressed: () {
                     Navigator.of(context).pop();
                   })
@@ -205,7 +210,7 @@ class _HomePageState extends State<HomePage> {
       score = 0;
       _showSnackBar('Data reset', Colors.white);
     }
-    coins += score;
+    coins -= score;
   }
 
   double getChange() {
@@ -244,6 +249,7 @@ class _HomePageState extends State<HomePage> {
                 increaseColor: Color(0xff53B987),
                 decreaseColor: Color(0xffEB4D5C),
                 data: this.quotes.sublist(begin, end),
+                maVol: this.maVol.sublist(begin, end),
                 enableGridLines: true,
                 labelPrefix: '',
                 volumeProp: 0.2),
