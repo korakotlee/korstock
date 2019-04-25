@@ -1,10 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+// import 'package:korstock/moving_average.dart';
+
 class OHLCVGraph extends StatelessWidget {
   OHLCVGraph({
     Key key,
     @required this.data,
+    this.maVol,
     this.lineWidth = 1.0,
     this.fallbackHeight = 100.0,
     this.fallbackWidth = 300.0,
@@ -23,6 +26,7 @@ class OHLCVGraph extends StatelessWidget {
   /// OHLCV data to graph  /// List of Maps containing open, high, low, close and volumeto
   /// Example: [["open" : 40.0, "high" : 75.0, "low" : 25.0, "close" : 50.0, "volumeto" : 5000.0}, {...}]
   final List data;
+  final List maVol;
 
   /// All lines in chart are drawn with this width
   final double lineWidth;
@@ -59,12 +63,13 @@ class OHLCVGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // maVol = ma(data, 5);
     return new LimitedBox(
       maxHeight: fallbackHeight,
       maxWidth: fallbackWidth,
       child: new CustomPaint(
         size: Size.infinite,
-        painter: new _OHLCVPainter(data,
+        painter: new _OHLCVPainter(data, maVol: maVol,
             lineWidth: lineWidth,
             gridLineColor: gridLineColor,
             gridLineAmount: gridLineAmount,
@@ -83,6 +88,7 @@ class OHLCVGraph extends StatelessWidget {
 class _OHLCVPainter extends CustomPainter {
   _OHLCVPainter(this.data,
       {@required this.lineWidth,
+      @required this.maVol,
       @required this.enableGridLines,
       @required this.gridLineColor,
       @required this.gridLineAmount,
@@ -94,6 +100,7 @@ class _OHLCVPainter extends CustomPainter {
       @required this.decreaseColor});
 
   final List data;
+  final List maVol;
   final double lineWidth;
   final bool enableGridLines;
   final Color gridLineColor;
@@ -115,20 +122,22 @@ class _OHLCVPainter extends CustomPainter {
   List<TextPainter> gridLineTextPainters = [];
   TextPainter maxVolumePainter;
 
-  drawVolumeMA(int i, double volumeBarTop, double volumeBarBottom,
-    double rectLeft, double rectWidth) {
+  drawVolumeMA(canvas, int i, height, volumeHeight,
+    double rectWidth, double volumeNormalizer) {
     
-    debugPrint('$i');
-    double middle = rectLeft + rectWidth / 2 - lineWidth / 2 - space/2;
-    // canvas.drawLine(
-        // new Offset(rectLeft + rectWidth / 2 - lineWidth / 2 - space/2, rectBottom),
-    //     new Offset(rectLeft + rectWidth / 2 - lineWidth / 2 - space/2, low),
-    //     rectPaint);
-
-    // Rect volumeRect = new Rect.fromLTRB(
-    //     rectLeft, volumeBarTop, rectRight, volumeBarBottom);
-    // rectPaint.color = Colors.blueAccent[100];
-    // canvas.drawRect(volumeRect, rectPaint);
+    Paint rectPaint = new Paint()
+    ..color = Colors.indigo
+    ..strokeWidth = 1;
+    if (i>0 && maVol[i] != null) {
+      // double rectLeft = (i * rectWidth) + lineWidth / 2;
+      double rectLeft1 = ((i-1) * rectWidth) + lineWidth / 2;
+      double rectRight = ((i + 1) * rectWidth) - lineWidth / 2 -space;
+      double vol = (height + volumeHeight) - (maVol[i] * volumeNormalizer - lineWidth / 2);
+      double vol1 = (height + volumeHeight) - (maVol[i-1] * volumeNormalizer - lineWidth / 2);
+      canvas.drawLine(
+          new Offset(rectLeft1, vol1),
+          new Offset(rectRight, vol), rectPaint);
+    }
 
   }
 
@@ -251,7 +260,7 @@ class _OHLCVPainter extends CustomPainter {
       double volumeBarBottom = height + volumeHeight + lineWidth / 2;
 
       // draw volume ma(20)
-      drawVolumeMA(i, volumeBarTop, volumeBarBottom, rectLeft, rectWidth);
+      drawVolumeMA(canvas, i, height, volumeHeight, rectWidth, volumeNormalizer);
 
       if (data[i]["open"] > data[i]["close"]) {
         // Draw candlestick if decrease
