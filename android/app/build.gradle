@@ -12,14 +12,14 @@ if (flutterRoot == null) {
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
-}
+// if (flutterVersionCode == null) {
+    flutterVersionCode = '3'
+// }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
-if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
-}
+// if (flutterVersionName == null) {
+    flutterVersionName = '1.0.2'
+// }
 
 apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -39,7 +39,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.korstock"
+        applicationId "com.korakotlee.korstock"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
