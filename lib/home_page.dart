@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_candlesticks/flutter_candlesticks.dart';
+// import 'package:flutter_candlesticks/flutter_candlesticks.dart';
+import 'package:korstock/candle.dart';
 import 'package:korstock/pattern.dart';
 import 'package:korstock/quote.dart';
 import 'package:korstock/background.dart';
