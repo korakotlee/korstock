@@ -8,6 +8,7 @@ class OHLCVGraph extends StatelessWidget {
     Key key,
     @required this.data,
     this.maVol,
+    this.ichimoku,
     this.lineWidth = 1.0,
     this.fallbackHeight = 100.0,
     this.fallbackWidth = 300.0,
@@ -27,6 +28,7 @@ class OHLCVGraph extends StatelessWidget {
   /// Example: [["open" : 40.0, "high" : 75.0, "low" : 25.0, "close" : 50.0, "volumeto" : 5000.0}, {...}]
   final List data;
   final List maVol;
+  final List ichimoku;
 
   /// All lines in chart are drawn with this width
   final double lineWidth;
@@ -71,6 +73,7 @@ class OHLCVGraph extends StatelessWidget {
         size: Size.infinite,
         painter: new _OHLCVPainter(data,
             maVol: maVol,
+            ichimoku: ichimoku,
             lineWidth: lineWidth,
             gridLineColor: gridLineColor,
             gridLineAmount: gridLineAmount,
@@ -90,6 +93,7 @@ class _OHLCVPainter extends CustomPainter {
   _OHLCVPainter(this.data,
       {@required this.lineWidth,
       @required this.maVol,
+      @required this.ichimoku,
       @required this.enableGridLines,
       @required this.gridLineColor,
       @required this.gridLineAmount,
@@ -102,6 +106,7 @@ class _OHLCVPainter extends CustomPainter {
 
   final List data;
   final List maVol;
+  final List ichimoku;
   final double lineWidth;
   final bool enableGridLines;
   final Color gridLineColor;
@@ -121,6 +126,34 @@ class _OHLCVPainter extends CustomPainter {
 
   List<TextPainter> gridLineTextPainters = [];
   TextPainter maxVolumePainter;
+
+  drawIchi(canvas, i, rectWidth, height, heightNormalizer) {
+    // if (data[i]["open"] > data[i]["close"]) {
+    //   // Draw candlestick if decrease
+    //   rectTop = height - (data[i]["open"] - _min) * heightNormalizer;
+    //   rectBottom = height - (data[i]["close"] - _min) * heightNormalizer;
+    //   rectPaint = new Paint()
+    //     ..color = decreaseColor
+    //     ..strokeWidth = lineWidth;
+
+    //   Rect ocRect =
+    //       new Rect.fromLTRB(rectLeft, rectTop, rectRight, rectBottom);
+    //   canvas.drawRect(ocRect, rectPaint);
+    if (i==0) return;
+    if (ichimoku[i - 1]['base'] == null) return;
+    Paint rectPaint = new Paint()
+      ..color = Colors.red
+      ..strokeWidth = 1;
+    double rectLeft1 = ((i - 1) * rectWidth) + lineWidth / 2;
+    double rectRight = ((i + 1) * rectWidth) - lineWidth / 2 - space;
+    double base = height - (ichimoku[i]["base"] - _min) * heightNormalizer;
+    double base1 = height - (ichimoku[i-1]["base"] - _min) * heightNormalizer;
+    // double base = ichimoku[i]['base'] * heightNormalizer;
+    // double base1 = ichimoku[i - 1]['base'] * heightNormalizer;
+    canvas.drawLine(
+    new Offset(rectLeft1, base1), new Offset(rectRight, base), rectPaint);
+
+  }
 
   drawVolumeMA(canvas, int i, height, volumeHeight, double rectWidth,
       double volumeNormalizer) {
@@ -263,6 +296,7 @@ class _OHLCVPainter extends CustomPainter {
       // draw volume ma(20)
       drawVolumeMA(
           canvas, i, height, volumeHeight, rectWidth, volumeNormalizer);
+      drawIchi(canvas, i, rectWidth, height, heightNormalizer);
 
       if (data[i]["open"] > data[i]["close"]) {
         // Draw candlestick if decrease

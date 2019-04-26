@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   List<Map<String, dynamic>> quotes;
   List maVol;
-  Map ichimoku;
+  List ichimoku;
   int begin = 0;
   int coins = 100;
   int last;
@@ -256,6 +256,7 @@ class _HomePageState extends State<HomePage> {
                 decreaseColor: Color(0xffEB4D5C),
                 data: this.quotes.sublist(begin, end),
                 maVol: this.maVol.sublist(begin, end),
+                ichimoku: this.ichimoku.sublist(begin, end),
                 enableGridLines: true,
                 labelPrefix: '',
                 volumeProp: 0.2),

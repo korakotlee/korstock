@@ -4,25 +4,21 @@ class Ichimoku {
 
   Ichimoku(this.data);
 
-  Map<String, List<double>> calc() {
-    List<double> _base = [];
-    List<double> _conversion = [];
-    List<double> _lead1 = [];
-    List<double> _lead2 = [];
-    List<double> _lag = [];
-    for (int i = 0; i < 30; i++) {
-      double lo = lowest(i, 5);
-      double hi = highest(i, 5);
-      double don = donchian(i, 5);
-      print('i: $i data: ${data[i]['low']} low: $lo hi: $hi don:$don');
+  List<Map<String, double>> calc() {
+    List<Map<String, double>> _ichi = [];
+    // List<double> _conversion = [];
+    // List<double> _lead1 = [];
+    // List<double> _lead2 = [];
+    // List<double> _lag = [];
+    for (int i = 0; i < data.length; i++) {
+      // double lo = lowest(i, 5);
+      // double hi = highest(i, 5);
+      double don = donchian(i, basePeriods);
+      _ichi.add({"base": donchian(i, basePeriods)});
+      // print('i: $i data: ${data[i]['low']} low: $lo hi: $hi don:$don');
     }
-    return {
-      'base': _base,
-      'conversion': _conversion,
-      'lead1': _lead1,
-      'lead2': _lead2,
-      'lag': _lag,
-    };
+    // print(_ichi);
+    return _ichi;
   }
 
   double lowest(i, len) {
