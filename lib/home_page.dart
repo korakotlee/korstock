@@ -255,6 +255,7 @@ class _HomePageState extends State<HomePage> {
                 increaseColor: Color(0xff53B987),
                 decreaseColor: Color(0xffEB4D5C),
                 data: this.quotes.sublist(begin, end),
+                // begin: begin,
                 maVol: this.maVol.sublist(begin, end),
                 ichimoku: this.ichimoku.sublist(begin, end),
                 enableGridLines: true,

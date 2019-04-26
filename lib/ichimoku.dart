@@ -13,7 +13,7 @@ class Ichimoku {
     for (int i = 0; i < data.length; i++) {
       // double lo = lowest(i, 5);
       // double hi = highest(i, 5);
-      double don = donchian(i, basePeriods);
+      // double don = donchian(i, basePeriods);
       _ichi.add({"base": donchian(i, basePeriods)});
       // print('i: $i data: ${data[i]['low']} low: $lo hi: $hi don:$don');
     }
