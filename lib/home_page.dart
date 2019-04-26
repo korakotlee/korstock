@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   List<Map<String, dynamic>> quotes;
   List maVol;
-  Map ichimoku;
+  List ichimoku;
   int begin = 0;
   int coins = 100;
   int last;
@@ -35,15 +35,17 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    getSharedPrefs();
+    change = 0;
+    last = n-2;
+    if (begin != 0) getSharedPrefs();
     setSharedPrefs();
     rootBundle.loadString("assets/help.txt").then((text) => this.help = text);
-    change = 0;
     Quote.getQuoteMap().then((result) {
       setState(() {
         this.quotes = result.reversed.toList();
         maVol = ma(quotes, 20);
-        ichimoku = ichi(quotes);
+        Ichimoku ichi = new Ichimoku(quotes);
+        ichimoku = ichi.calc();
         price = quotes[last]['close'];
       });
     });
@@ -154,6 +156,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget showPrice() {
+    if (price==null) return Container();
     return Positioned(
       right: 150,
       bottom: 100,
@@ -253,6 +256,7 @@ class _HomePageState extends State<HomePage> {
                 decreaseColor: Color(0xffEB4D5C),
                 data: this.quotes.sublist(begin, end),
                 maVol: this.maVol.sublist(begin, end),
+                ichimoku: this.ichimoku.sublist(begin, end),
                 enableGridLines: true,
                 labelPrefix: '',
                 volumeProp: 0.2),

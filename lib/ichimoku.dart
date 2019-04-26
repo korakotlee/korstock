@@ -1,35 +1,55 @@
-Map<String, List<double>> ichi(data) {
-  // int w = window - 1;
-  List<double>_base = [];
-  List<double>_conversion = [];
-  List<double>_lead1 = [];
-  List<double>_lead2 = [];
-  List<double>_lag = [];
-  // for (int i =0; i< values.length; i++ ) {
-  //   if (i < w) _ma.add(null);
-  //   else {
-  //     List group = values.sublist(i-w,i+1);
-  //     double sum = 0;
-  //     group.forEach((var v) {sum += v['volumeto'];});
-  //     // print("sum $sum");
-  //     _ma.add(sum/window);
-  //   }
-  // }
-  return {
-    'base': _base,
-    'conversion': _conversion,
-    'lead1': _lead1,
-    'lead2': _lead2,
-    'lag': _lag,
-  };
+class Ichimoku {
+  final List<Map<String, dynamic>> data;
+  final int basePeriods = 26;
+
+  Ichimoku(this.data);
+
+  List<Map<String, double>> calc() {
+    List<Map<String, double>> _ichi = [];
+    // List<double> _conversion = [];
+    // List<double> _lead1 = [];
+    // List<double> _lead2 = [];
+    // List<double> _lag = [];
+    for (int i = 0; i < data.length; i++) {
+      // double lo = lowest(i, 5);
+      // double hi = highest(i, 5);
+      double don = donchian(i, basePeriods);
+      _ichi.add({"base": donchian(i, basePeriods)});
+      // print('i: $i data: ${data[i]['low']} low: $lo hi: $hi don:$don');
+    }
+    // print(_ichi);
+    return _ichi;
+  }
+
+  double lowest(i, len) {
+    double low = 9999.0;
+    if (i < len - 1) return null;
+    for (int j = i; j > i - len; j--) {
+      double dataLow = data[j]['low'];
+      if (dataLow < low) low = dataLow;
+    }
+    return low;
+  }
+
+  double highest(i, len) {
+    double high = 0.0;
+    if (i < len - 1) return null;
+    for (int j = i; j > i - len; j--) {
+      double dataHigh = data[j]['high'];
+      if (dataHigh > high) high = dataHigh;
+    }
+    return high;
+  }
+
+  double donchian(i, len) {
+    if (i < len - 1) return null;
+    return (lowest(i, len) + highest(i, len)) / 2;
+  }
 }
-
-
 // conversionPeriods = input(9, minval=1, title="Conversion Line Periods"),
 // basePeriods = input(26, minval=1, title="Base Line Periods")
 // laggingSpan2Periods = input(52, minval=1, title="Lagging Span 2 Periods"),
 // displacement = input(26, minval=1, title="Displacement")
-// hivolume = input(1.5, minval=2, title="Hi Volume")
 
 // donchian(len) => avg(lowest(len), highest(len))
 
@@ -55,6 +75,6 @@ Map<String, List<double>> ichi(data) {
 
 // p1 = plot(leadLine1, offset = displacement, color=green,
 //     title="Lead 1")
-// p2 = plot(leadLine2, offset = displacement, color=red, 
+// p2 = plot(leadLine2, offset = displacement, color=red,
 //     title="Lead 2")
 // fill(p1, p2, color = leadLine1 > leadLine2 ? green : red)
