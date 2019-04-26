@@ -43,7 +43,8 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         this.quotes = result.reversed.toList();
         maVol = ma(quotes, 20);
-        ichimoku = ichi(quotes);
+        Ichimoku ichi = new Ichimoku(quotes);
+        ichimoku = ichi.calc();
         price = quotes[last]['close'];
       });
     });
