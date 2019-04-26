@@ -35,10 +35,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    getSharedPrefs();
+    change = 0;
+    last = n-2;
+    if (begin != 0) getSharedPrefs();
     setSharedPrefs();
     rootBundle.loadString("assets/help.txt").then((text) => this.help = text);
-    change = 0;
     Quote.getQuoteMap().then((result) {
       setState(() {
         this.quotes = result.reversed.toList();
@@ -155,6 +156,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget showPrice() {
+    if (price==null) return Container();
     return Positioned(
       right: 150,
       bottom: 100,
