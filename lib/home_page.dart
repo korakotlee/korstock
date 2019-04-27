@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> quotes;
   List maVol;
   List ichimoku;
-  int begin = 0;
+  int begin;
   int coins = 100;
   int last;
   double price;
@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     change = 0;
     last = n-2;
-    if (begin != 0) getSharedPrefs();
+    getSharedPrefs();
     setSharedPrefs();
     rootBundle.loadString("assets/help.txt").then((text) => this.help = text);
     Quote.getQuoteMap().then((result) {
