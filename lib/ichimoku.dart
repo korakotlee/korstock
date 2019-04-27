@@ -3,6 +3,7 @@ class Ichimoku {
   final int basePeriods = 26;
   final int conversionPeriods = 9;
   final int laggingSpan2Periods = 52;
+  final int displacement = 26;
 
   Ichimoku(this.data);
 
@@ -20,11 +21,17 @@ class Ichimoku {
         "conversion": conversion, // Tenkan
         "lead1": lead1, // Senkou A
         "lead2": lead2, // Senkou B
+        "lag": lag(i)
       });
       // print('i: $i data: ${data[i]['low']} low: $lo hi: $hi don:$don');
     }
     // print(_ichi.sublist(100,105));
     return _ichi;
+  }
+
+  double lag(i) {
+    if (i+displacement > data.length -1) return null;
+    return data[i+displacement]['close'];
   }
 
   double lowest(i, len) {

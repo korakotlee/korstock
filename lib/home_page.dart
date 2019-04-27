@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final int n = 20; // number of bars
+  final int n = 40; // number of bars
   final threshold = 0.5;
 
   List<Map<String, dynamic>> quotes;
@@ -168,6 +168,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _checkCandle() {
+    if (quotes == null) return;
     last = begin + n - 2;
     var q = quotes[last + 1]; // new bar
     var q1 = quotes[last]; // current bar

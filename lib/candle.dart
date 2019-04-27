@@ -127,14 +127,14 @@ class _OHLCVPainter extends CustomPainter {
   double _max;
   double _maxVolume;
 
-  final double space = 5.0;
+  final double space = 3.0;
+  final int displacement = 26; // displacement for lagging span
 
   List<TextPainter> gridLineTextPainters = [];
   TextPainter maxVolumePainter;
 
   drawIchi(canvas, i, rectWidth, height, heightNormalizer) {
     if (i == 0) return;
-    if (ichimoku[i - 1]['base'] == null) return;
 
     Paint rectPaint = new Paint();
     double val, val1;
@@ -145,17 +145,21 @@ class _OHLCVPainter extends CustomPainter {
 
     rectPaint.strokeWidth = 2;
     // base
-    rectPaint.color = Colors.red;
-    val = height - (ichimoku[i]["base"] - _min) * heightNormalizer;
-    val1 = height - (ichimoku[i - 1]["base"] - _min) * heightNormalizer;
-    canvas.drawLine(
-      new Offset(middle1, val1), new Offset(middle, val), rectPaint);
+    if (ichimoku[i - 1]['base'] != null) {
+      rectPaint.color = Colors.red;
+      val = height - (ichimoku[i]["base"] - _min) * heightNormalizer;
+      val1 = height - (ichimoku[i - 1]["base"] - _min) * heightNormalizer;
+      canvas.drawLine(
+        new Offset(middle1, val1), new Offset(middle, val), rectPaint);
+    }
     // conversion
-    rectPaint.color = Colors.blue;
-    val = height - (ichimoku[i]["conversion"] - _min) * heightNormalizer;
-    val1 = height - (ichimoku[i - 1]["conversion"] - _min) * heightNormalizer;
-    canvas.drawLine(
-      new Offset(middle1, val1), new Offset(middle, val), rectPaint);
+    if (ichimoku[i - 1]["conversion"] != null) {
+      rectPaint.color = Colors.blue;
+      val = height - (ichimoku[i]["conversion"] - _min) * heightNormalizer;
+      val1 = height - (ichimoku[i - 1]["conversion"] - _min) * heightNormalizer;
+      canvas.drawLine(
+        new Offset(middle1, val1), new Offset(middle, val), rectPaint);
+    }
     // cloud
     double lead1 = ichimoku[i]["lead1"];
     double lead2 = ichimoku[i]["lead2"];
@@ -168,8 +172,8 @@ class _OHLCVPainter extends CustomPainter {
       val1 = height - (lead2 - _min) * heightNormalizer;
       val_1 = height - (lead1_1 - _min) * heightNormalizer;
       val1_1 = height - (lead2_1 - _min) * heightNormalizer;
-      double top = val > val1 ? val1 : val;
-      double bottom = val > val1 ? val : val1;
+      // double top = val > val1 ? val1 : val;
+      // double bottom = val > val1 ? val : val1;
       // Rect rect = new Rect.fromLTRB( middle1, top, middle, bottom);
       // canvas.drawRect(rect, rectPaint);
       var path1 = Path()
@@ -179,9 +183,14 @@ class _OHLCVPainter extends CustomPainter {
       ..lineTo(middle1, val1_1);
       canvas.drawPath(path1, rectPaint);
     }
-
-    // canvas.drawRect(
-    //   new Offset(middle1, val1), new Offset(middle, val), rectPaint);
+    // lag
+    if (i < data.length-displacement) {
+      rectPaint.color = Colors.purple;
+      val = height - (ichimoku[i]["lag"] - _min) * heightNormalizer;
+      val1 = height - (ichimoku[i - 1]["lag"] - _min) * heightNormalizer;
+      canvas.drawLine(
+        new Offset(middle1, val1), new Offset(middle, val), rectPaint);
+    }
   }
 
   drawVolumeMA(canvas, i, height, volumeHeight, rectWidth, volumeNormalizer) {
