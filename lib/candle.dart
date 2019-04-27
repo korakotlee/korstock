@@ -133,47 +133,79 @@ class _OHLCVPainter extends CustomPainter {
   TextPainter maxVolumePainter;
 
   drawIchi(canvas, i, rectWidth, height, heightNormalizer) {
-    if (i==0) return;
+    if (i == 0) return;
     if (ichimoku[i - 1]['base'] == null) return;
-    Paint rectPaint = new Paint()
-      ..color = Colors.red
-      ..strokeWidth = 1;
+
+    Paint rectPaint = new Paint();
+    double val, val1;
     double rectLeft = ((i) * rectWidth) + lineWidth / 2;
     double rectLeft1 = ((i - 1) * rectWidth) + lineWidth / 2;
     double middle = rectLeft + rectWidth / 2 - lineWidth / 2 - space / 2;
     double middle1 = rectLeft1 + rectWidth / 2 - lineWidth / 2 - space / 2;
-    double base = height - (ichimoku[i]["base"] - _min) * heightNormalizer;
-    double base1 = height - (ichimoku[i-1]["base"] - _min) * heightNormalizer;
-    canvas.drawLine(
-    new Offset(middle1, base1), new Offset(middle, base), rectPaint);
 
+    rectPaint.strokeWidth = 2;
+    // base
+    rectPaint.color = Colors.red;
+    val = height - (ichimoku[i]["base"] - _min) * heightNormalizer;
+    val1 = height - (ichimoku[i - 1]["base"] - _min) * heightNormalizer;
+    canvas.drawLine(
+      new Offset(middle1, val1), new Offset(middle, val), rectPaint);
+    // conversion
+    rectPaint.color = Colors.blue;
+    val = height - (ichimoku[i]["conversion"] - _min) * heightNormalizer;
+    val1 = height - (ichimoku[i - 1]["conversion"] - _min) * heightNormalizer;
+    canvas.drawLine(
+      new Offset(middle1, val1), new Offset(middle, val), rectPaint);
+    // cloud
+    double lead1 = ichimoku[i]["lead1"];
+    double lead2 = ichimoku[i]["lead2"];
+    double lead1_1 = ichimoku[i-1]["lead1"];
+    double lead2_1 = ichimoku[i-1]["lead2"];
+    if (lead1_1 != null && lead2_1 != null) {
+      double val_1, val1_1;
+      rectPaint.color = lead1 > lead2 ? Color(0x4453B987) : Color(0x44EB4D5C);
+      val = height - (lead1 - _min) * heightNormalizer;
+      val1 = height - (lead2 - _min) * heightNormalizer;
+      val_1 = height - (lead1_1 - _min) * heightNormalizer;
+      val1_1 = height - (lead2_1 - _min) * heightNormalizer;
+      double top = val > val1 ? val1 : val;
+      double bottom = val > val1 ? val : val1;
+      // Rect rect = new Rect.fromLTRB( middle1, top, middle, bottom);
+      // canvas.drawRect(rect, rectPaint);
+      var path1 = Path()
+      ..moveTo(middle1, val_1)
+      ..lineTo(middle, val)
+      ..lineTo(middle, val1)
+      ..lineTo(middle1, val1_1);
+      canvas.drawPath(path1, rectPaint);
+    }
+
+    // canvas.drawRect(
+    //   new Offset(middle1, val1), new Offset(middle, val), rectPaint);
   }
 
-  drawVolumeMA(canvas, int i, height, volumeHeight, double rectWidth,
-      double volumeNormalizer) {
+  drawVolumeMA(canvas, i, height, volumeHeight, rectWidth, volumeNormalizer) {
     // print(i);
-    if (i==0) return;
+    if (i == 0) return;
     if (maVol[i - 1] == null) return;
 
     Paint rectPaint = new Paint()
       ..color = Colors.indigo
       ..strokeWidth = 1;
     if (i > 0 && maVol[i] != null) {
-      // double rectLeft = (i * rectWidth) + lineWidth / 2;
-      // double rectLeft1 = ((i - 1) * rectWidth) + lineWidth / 2;
-      // double rectRight = ((i + 1) * rectWidth) - lineWidth / 2 - space;
-    double rectLeft = ((i) * rectWidth) + lineWidth / 2;
-    double rectLeft1 = ((i - 1) * rectWidth) + lineWidth / 2;
-    double middle = rectLeft + (rectWidth  - lineWidth  - space) / 2;
-    double middle1 = rectLeft1 + (rectWidth  - lineWidth  - space) / 2;
+      double rectRight = ((i + 1) * rectWidth) - lineWidth / 2 - space;
+      // double rectLeft = ((i) * rectWidth) + lineWidth / 2;
+      double rectLeft1 = ((i - 1) * rectWidth) + lineWidth / 2;
+      // double middle = rectLeft + (rectWidth  - lineWidth  - space) / 2;
+      // double middle1 = rectLeft1 + (rectWidth  - lineWidth  - space) / 2;
       // if (maVol[i - 1] != null) {
-    double vol = (height + volumeHeight) -
-        (maVol[i] * volumeNormalizer - lineWidth / 2);
-    double vol1 = (height + volumeHeight) -
-        (maVol[i - 1] * volumeNormalizer - lineWidth / 2);
-    canvas.drawLine(
-        new Offset(middle1, vol1), new Offset(middle, vol), rectPaint);
-    print('$i: $middle1, $vol1 => $middle, $vol'); 
+      double vol = (height + volumeHeight) -
+          (maVol[i] * volumeNormalizer - lineWidth / 2);
+      double vol1 = (height + volumeHeight) -
+          (maVol[i - 1] * volumeNormalizer - lineWidth / 2);
+      canvas.drawLine(
+        new Offset(rectLeft1, vol1), new Offset(rectRight, vol), rectPaint);
+      // print('$i: ${middle1.toStringAsFixed(0)}, ${vol1.toStringAsFixed(0)} => ${middle.toStringAsFixed(0)}, ${vol.toStringAsFixed(0)}');
       // }
     }
   }
@@ -243,6 +275,7 @@ class _OHLCVPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    // print('*** paint');
     if (_min == null || _max == null || _maxVolume == null) {
       update();
     }
