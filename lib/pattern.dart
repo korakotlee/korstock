@@ -111,7 +111,7 @@ List<Pattern> detectPattern(var q, var q1, var q2) {
   pattern = ((q1['close'] > q1['open']) &&
       (((q1['close'] + q1['open']) / 2) > q1['close']) &&
       (q['open'] > q['close']) &&
-      (q['open'] > q1['close'][1]) &&
+      (q['open'] > q1['close']) &&
       (q['close'] > q1['open']) &&
       ((q['open'] - q['close']) / (.001 + (q['high'] - q['low'])) > 0.6));
   if (pattern) p.add(Pattern('Dark Cloud Cover', Colors.red, 'down'));
