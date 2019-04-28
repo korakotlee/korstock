@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
   int coins = 100;
   int last;
   double price;
+  String qDate;
   double change;
   String help;
 
@@ -47,6 +48,7 @@ class _HomePageState extends State<HomePage> {
         Ichimoku ichi = new Ichimoku(quotes);
         ichimoku = ichi.calc();
         price = quotes[last]['close'];
+        qDate = quotes[last]['qDate'];
       });
     });
   }
@@ -162,6 +164,7 @@ class _HomePageState extends State<HomePage> {
       bottom: 100,
       child: Text(
         '$price (${change.toStringAsFixed(2)}%)',
+        // '$qDate\n$price (${change.toStringAsFixed(2)}%)',
         style: TextStyle(fontFamily: "Bitter", fontSize: 18.0),
       ),
     );
@@ -174,6 +177,7 @@ class _HomePageState extends State<HomePage> {
     var q1 = quotes[last]; // current bar
     var q2 = quotes[last - 1]; // previous bar
     price = q['close'];
+    qDate = q['qDate'];
     List<Pattern> results = detectPattern(q, q1, q2);
     results.forEach((result) {
       _showSnackBar(result.text, result.color);
