@@ -6,8 +6,9 @@ import 'package:korstock/quote.dart';
 import 'package:korstock/background.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'moving_average.dart';
-import 'ichimoku.dart';
+import 'package:korstock/adx.dart';
+import 'package:korstock/moving_average.dart';
+import 'package:korstock/ichimoku.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -24,7 +25,8 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> quotes;
   List maVol;
   List ichimoku;
-  int begin;
+  List adxList;
+  int begin = 0;
   int coins = 100;
   int last;
   double price;
@@ -47,6 +49,8 @@ class _HomePageState extends State<HomePage> {
         maVol = ma(quotes, 20);
         Ichimoku ichi = new Ichimoku(quotes);
         ichimoku = ichi.calc();
+        ADX adxClass = new ADX(quotes);
+        adxList = adxClass.calc();
         price = quotes[last]['close'];
         qDate = quotes[last]['qDate'];
       });
@@ -62,7 +66,15 @@ class _HomePageState extends State<HomePage> {
           child: Builder(
             builder: (context) => Stack(children: <Widget>[
                   Background("KorStock"),
-                  candle(),
+                  Column(
+                    children: <Widget>[
+                      Expanded(child: candle()),
+                      SizedBox(
+                        height: 50.0,
+                        child: showADX(),
+                      )
+                    ],
+                  ),
                   coinsWidget(),
                   buttons(),
                   showPrice(),
@@ -71,6 +83,31 @@ class _HomePageState extends State<HomePage> {
           ),
         ));
   }
+
+  Widget showADX() {
+    if (this.quotes == null) return Container();
+    final double height = 40;
+    int end = begin + n - 1;
+
+    // List<Map<String, dynamic>> data = this.quotes.sublist(begin, end);
+    List adx = adxList.sublist(begin, end);
+    // List<double> adx = ADX(data).calc();
+
+    double normalizer = height / max(adx);
+
+    return Text('show ADX $normalizer');
+  }
+
+  double max(List<double> data) {
+    // if (data == null) return 1.0;
+    double max = nz(data[0]);
+    data.forEach((vv) {
+      if (vv != null) 
+        max = max > nz(vv) ?  max : vv; });
+    return max;
+  }
+
+  double nz(v) => (v == null ? 1.0 : v);
 
   void showHelp() {
     showDialog(
@@ -295,6 +332,7 @@ class _HomePageState extends State<HomePage> {
           child: Padding(
             padding: EdgeInsets.only(top: 30.0, bottom: 10.0, left: 10.0),
             child: OHLCVGraph(
+                // fallbackHeight: 50.0,
                 increaseColor: Color(0xff53B987),
                 decreaseColor: Color(0xffEB4D5C),
                 data: this.quotes.sublist(begin, end),
