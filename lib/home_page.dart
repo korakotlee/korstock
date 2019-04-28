@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_candlesticks/flutter_candlesticks.dart';
 import 'package:korstock/candle.dart';
 import 'package:korstock/pattern.dart';
 import 'package:korstock/quote.dart';
@@ -32,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   String qDate;
   double change;
   String help;
+  Widget widgetCandlePattern = Container();
 
   @override
   void initState() {
@@ -66,6 +66,7 @@ class _HomePageState extends State<HomePage> {
                   coinsWidget(),
                   buttons(),
                   showPrice(),
+                  widgetCandlePattern,
                 ]),
           ),
         ));
@@ -157,6 +158,40 @@ class _HomePageState extends State<HomePage> {
           ])));
   }
 
+  void createWidgetCandlePattern(List<Pattern> results) {
+    Widget w = ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: results.length,
+      itemBuilder: (BuildContext context, int index) {
+        IconData icon = Icons.compare_arrows;
+        print(results[index].direction);
+        switch (results[index].direction) {
+          case 'up': { icon = Icons.arrow_upward; }
+          break;
+          case 'down': { icon = Icons.arrow_downward; }
+          break;
+          default: { icon = Icons.compare_arrows; }
+          break;
+        }
+        return Row(
+          children: <Widget>[
+            Icon(icon),
+            Text(results[index].text, style: TextStyle(color: results[index].color),),
+          ],
+        );
+      },
+    );
+    widgetCandlePattern = Positioned(
+      left: 30,
+      bottom: 100,
+      child: Container(
+        width: 300,
+        height: 150,
+        child: w)
+    );
+  }
+
   Widget showPrice() {
     if (price==null) return Container();
     return Positioned(
@@ -179,9 +214,10 @@ class _HomePageState extends State<HomePage> {
     price = q['close'];
     qDate = q['qDate'];
     List<Pattern> results = detectPattern(q, q1, q2);
-    results.forEach((result) {
-      _showSnackBar(result.text, result.color);
-    });
+    createWidgetCandlePattern(results);
+    // results.forEach((result) {
+    //   _showSnackBar(result.text, result.color);
+    // });
   }
 
   void doBuy() {
