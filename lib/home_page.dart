@@ -176,15 +176,17 @@ class _HomePageState extends State<HomePage> {
         }
         return Row(
           children: <Widget>[
-            Icon(icon),
-            Text(results[index].text, style: TextStyle(color: results[index].color),),
+            Icon(icon, color: Colors.indigo, size: 30.0,),
+            Text(results[index].text, style: TextStyle(
+              color: results[index].color,
+              fontWeight: FontWeight.bold,)),
           ],
         );
       },
     );
     widgetCandlePattern = Positioned(
       left: 30,
-      bottom: 100,
+      bottom: 30,
       child: Container(
         width: 300,
         height: 150,

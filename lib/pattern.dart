@@ -46,15 +46,15 @@ List<Pattern> detectPattern(var q, var q1, var q2) {
   pattern = (((q['high'] - q['low']) > 3 * (q['open'] - q['close'])) &&
       ((q['close'] - q['low']) / (.001 + q['high'] - q['low']) > 0.6) &&
       ((q['open'] - q['low']) / (.001 + q['high'] - q['low']) > 0.6));
-  if (pattern) p.add(Pattern('Hammer', Colors.white, ''));
+  if (pattern) p.add(Pattern('Hammer', Colors.black, ''));
 // data5=(((high - low)>3*(open -close)) and  ((close - low)/(.001 + high - low) > 0.6) and ((open - low)/(.001 + high - low) > 0.6))
-// plotshape(data5, title= "Hammer", location=location.belowbar, color=white, style=shape.diamond, text="H")
+// plotshape(data5, title= "Hammer", location=location.belowbar, color=black, style=shape.diamond, text="H")
 
   pattern = (((q['high'] - q['low']) > 3 * (q['open'] - q['close'])) &&
       ((q['high'] - q['close']) / (.001 + q['high'] - q['low']) > 0.6) &&
       ((q['high'] - q['open']) / (.001 + q['high'] - q['low']) > 0.6));
-  if (pattern) p.add(Pattern('Inverted Hammer', Colors.white, ''));
-// plotshape(data5b, title= "Inverted Hammer", location=location.belowbar, color=white, style=shape.diamond, text="IH")
+  if (pattern) p.add(Pattern('Inverted Hammer', Colors.black, ''));
+// plotshape(data5b, title= "Inverted Hammer", location=location.belowbar, color=black, style=shape.diamond, text="IH")
 
   pattern = (q1['close'] > q1['open'] &&
       q['open'] > q['close'] &&
