@@ -20,7 +20,7 @@ class ADXPainter extends CustomPainter {
   ADXPainter(this.data);
 
   final List<double> data;
-  final double height = 40;
+  final double height = 50;
   double min, max;
 
   @override
@@ -33,6 +33,7 @@ class ADXPainter extends CustomPainter {
     final double lineWidth = 2.0;
     final double space = 3.0;
     double val, val1;
+    final double bottomPadding = 10.0;
 
     paint = new Paint()
       ..color = Colors.blueGrey
@@ -45,12 +46,19 @@ class ADXPainter extends CustomPainter {
       double rectLeft1 = ((i - 1) * rectWidth) + lineWidth / 2;
       double middle = rectLeft + rectWidth / 2 - lineWidth / 2 - space / 2;
       double middle1 = rectLeft1 + rectWidth / 2 - lineWidth / 2 - space / 2;
-      val = height - (data[i] - min) * normalizer;
-      val1 = height - (data[i-1] - min) * normalizer;
+      val = height - (data[i] - min) * normalizer - bottomPadding;
+      val1 = height - (data[i-1] - min) * normalizer - bottomPadding;
       Offset p1 = new Offset(middle1, val1);
       Offset p2 = new Offset(middle, val);
       canvas.drawLine(p1, p2, paint);
     }
+    paint
+      ..color = Colors.red
+      ..strokeWidth = 1;
+    val = height - (20 - min) * normalizer - bottomPadding;
+    Offset p1 = new Offset(5, val);
+    Offset p2 = new Offset(size.width - 5, val);
+    canvas.drawLine(p1, p2, paint);
   }
 
   @override

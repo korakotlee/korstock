@@ -336,6 +336,7 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   Expanded(
                     child: Container(
+                      // padding: EdgeInsets.only(bottom: 10.0),
                       child: showADX(),
                     )
                   ),
