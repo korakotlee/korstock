@@ -27,8 +27,9 @@ class ADXPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (data == null) return;
     Paint paint;
-    final double width = size.width;
-    final double rectWidth = width / data.length;
+    // final double width = 300;
+    // size.width = ;
+    final double rectWidth = size.width / data.length;
     final double lineWidth = 2.0;
     final double space = 3.0;
     double val, val1;

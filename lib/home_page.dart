@@ -51,8 +51,8 @@ class _HomePageState extends State<HomePage> {
         maVol = ma(quotes, 20);
         Ichimoku ichi = new Ichimoku(quotes);
         ichimoku = ichi.calc();
-        ADX adxClass = new ADX(quotes);
-        adxList = adxClass.calc();
+        // ADX adxClass = new ADX(quotes);
+        // adxList = adxClass.calc();
         price = quotes[last]['close'];
         qDate = quotes[last]['qDate'];
       });
@@ -71,10 +71,10 @@ class _HomePageState extends State<HomePage> {
                   Column(
                     children: <Widget>[
                       Expanded(child: candle()),
-                      SizedBox(
-                        height: 50.0,
-                        child: showADX(),
-                      )
+                      // Container( 
+                      //   height: 50.0,
+                      //   width: 400.0,
+                      //   child: showADX() ),
                     ],
                   ),
                   coinsWidget(),
@@ -89,6 +89,7 @@ class _HomePageState extends State<HomePage> {
   Widget showADX() {
     if (this.quotes == null) return Container();
     int end = begin + n - 1;
+
     return ADXChart(data: adxList.sublist(begin, end));
   }
 
