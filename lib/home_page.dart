@@ -10,6 +10,8 @@ import 'package:korstock/adx.dart';
 import 'package:korstock/moving_average.dart';
 import 'package:korstock/ichimoku.dart';
 
+import 'adx_chart.dart';
+
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
 
@@ -86,28 +88,9 @@ class _HomePageState extends State<HomePage> {
 
   Widget showADX() {
     if (this.quotes == null) return Container();
-    final double height = 40;
     int end = begin + n - 1;
-
-    // List<Map<String, dynamic>> data = this.quotes.sublist(begin, end);
-    List adx = adxList.sublist(begin, end);
-    // List<double> adx = ADX(data).calc();
-
-    double normalizer = height / max(adx);
-
-    return Text('show ADX $normalizer');
+    return ADXChart(data: adxList.sublist(begin, end));
   }
-
-  double max(List<double> data) {
-    // if (data == null) return 1.0;
-    double max = nz(data[0]);
-    data.forEach((vv) {
-      if (vv != null) 
-        max = max > nz(vv) ?  max : vv; });
-    return max;
-  }
-
-  double nz(v) => (v == null ? 1.0 : v);
 
   void showHelp() {
     showDialog(
