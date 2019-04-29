@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_candlesticks/flutter_candlesticks.dart';
 import 'package:korstock/candle.dart';
 import 'package:korstock/pattern.dart';
 import 'package:korstock/quote.dart';
 import 'package:korstock/background.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'moving_average.dart';
-import 'ichimoku.dart';
+import 'package:korstock/adx.dart';
+import 'package:korstock/moving_average.dart';
+import 'package:korstock/ichimoku.dart';
+
+import 'adx_chart.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -19,25 +21,28 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final int n = 20; // number of bars
+  final int n = 40; // number of bars
   final threshold = 0.5;
 
   List<Map<String, dynamic>> quotes;
   List maVol;
   List ichimoku;
+  List adxList;
   int begin = 0;
   int coins = 100;
   int last;
   double price;
+  String qDate;
   double change;
   String help;
+  Widget widgetCandlePattern = Container();
 
   @override
   void initState() {
     super.initState();
     change = 0;
     last = n-2;
-    if (begin != 0) getSharedPrefs();
+    getSharedPrefs();
     setSharedPrefs();
     rootBundle.loadString("assets/help.txt").then((text) => this.help = text);
     Quote.getQuoteMap().then((result) {
@@ -46,7 +51,10 @@ class _HomePageState extends State<HomePage> {
         maVol = ma(quotes, 20);
         Ichimoku ichi = new Ichimoku(quotes);
         ichimoku = ichi.calc();
+        ADX adxClass = new ADX(quotes);
+        adxList = adxClass.calc();
         price = quotes[last]['close'];
+        qDate = quotes[last]['qDate'];
       });
     });
   }
@@ -60,10 +68,19 @@ class _HomePageState extends State<HomePage> {
           child: Builder(
             builder: (context) => Stack(children: <Widget>[
                   Background("KorStock"),
-                  candle(),
+                  Column(
+                    children: <Widget>[
+                      Expanded(child: candle()),
+                      // Container( 
+                      //   height: 50.0,
+                      //   width: 400.0,
+                      //   child: showADX() ),
+                    ],
+                  ),
                   coinsWidget(),
                   buttons(),
                   showPrice(),
+                  widgetCandlePattern,
                 ]),
           ),
         ));
@@ -155,6 +172,42 @@ class _HomePageState extends State<HomePage> {
           ])));
   }
 
+  void createWidgetCandlePattern(List<Pattern> results) {
+    Widget w = ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: results.length,
+      itemBuilder: (BuildContext context, int index) {
+        IconData icon = Icons.compare_arrows;
+        // print(results[index].direction);
+        switch (results[index].direction) {
+          case 'up': { icon = Icons.arrow_upward; }
+          break;
+          case 'down': { icon = Icons.arrow_downward; }
+          break;
+          default: { icon = Icons.compare_arrows; }
+          break;
+        }
+        return Row(
+          children: <Widget>[
+            Icon(icon, color: Colors.indigo, size: 30.0,),
+            Text(results[index].text, style: TextStyle(
+              color: results[index].color,
+              fontWeight: FontWeight.bold,)),
+          ],
+        );
+      },
+    );
+    widgetCandlePattern = Positioned(
+      left: 30,
+      bottom: 30,
+      child: Container(
+        width: 300,
+        height: 150,
+        child: w)
+    );
+  }
+
   Widget showPrice() {
     if (price==null) return Container();
     return Positioned(
@@ -162,21 +215,25 @@ class _HomePageState extends State<HomePage> {
       bottom: 100,
       child: Text(
         '$price (${change.toStringAsFixed(2)}%)',
+        // '$qDate\n$price (${change.toStringAsFixed(2)}%)',
         style: TextStyle(fontFamily: "Bitter", fontSize: 18.0),
       ),
     );
   }
 
   void _checkCandle() {
+    if (quotes == null) return;
     last = begin + n - 2;
     var q = quotes[last + 1]; // new bar
     var q1 = quotes[last]; // current bar
     var q2 = quotes[last - 1]; // previous bar
     price = q['close'];
+    qDate = q['qDate'];
     List<Pattern> results = detectPattern(q, q1, q2);
-    results.forEach((result) {
-      _showSnackBar(result.text, result.color);
-    });
+    createWidgetCandlePattern(results);
+    // results.forEach((result) {
+    //   _showSnackBar(result.text, result.color);
+    // });
   }
 
   void doBuy() {
@@ -241,29 +298,56 @@ class _HomePageState extends State<HomePage> {
         ]));
   }
 
+  Widget showADX() {
+    if (this.adxList == null) return Container();
+    int end = begin + n - 1;
+
+    return ADXChart(data: adxList.sublist(begin, end));
+  }
+
   Widget candle() {
     if (quotes == null) {
       return Container();
     }
     int end = begin + n - 1;
+    double gridTextSpace = 6.0 * 6; // 6 * number of chars (e.g. 142.21)
     return Row(
       children: <Widget>[
         Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(top: 30.0, bottom: 10.0, left: 10.0),
-            child: OHLCVGraph(
-                increaseColor: Color(0xff53B987),
-                decreaseColor: Color(0xffEB4D5C),
-                data: this.quotes.sublist(begin, end),
-                // begin: begin,
-                maVol: this.maVol.sublist(begin, end),
-                ichimoku: this.ichimoku.sublist(begin, end),
-                enableGridLines: true,
-                labelPrefix: '',
-                volumeProp: 0.2),
-          ),
-        ),
-        Container(
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(top: 30.0, bottom: 10.0, left: 10.0),
+                child: OHLCVGraph(
+                  increaseColor: Color(0xff53B987),
+                  decreaseColor: Color(0xffEB4D5C),
+                  data: this.quotes.sublist(begin, end),
+                  maVol: this.maVol.sublist(begin, end),
+                  ichimoku: this.ichimoku.sublist(begin, end),
+                  enableGridLines: true,
+                  labelPrefix: '',
+                  volumeProp: 0.2),
+              ),
+            ),
+        
+            // Container(height: 50.0,
+            //   child: Row(
+            //     children: <Widget>[
+            //       Expanded(
+            //         child: Container(
+            //           // padding: EdgeInsets.only(bottom: 10.0),
+            //           child: showADX(),
+            //         )
+            //       ),
+            //       Container(width: gridTextSpace,
+            //         alignment: FractionalOffset.center,
+            //         child: Text('ADX'),)
+            //     ]
+            //   ,),),
+          ],
+        ), ),
+        Container( // Space for buttons
           width: 100.0,
         )
       ],

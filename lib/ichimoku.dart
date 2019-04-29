@@ -1,24 +1,37 @@
 class Ichimoku {
   final List<Map<String, dynamic>> data;
   final int basePeriods = 26;
+  final int conversionPeriods = 9;
+  final int laggingSpan2Periods = 52;
+  final int displacement = 26;
 
   Ichimoku(this.data);
 
   List<Map<String, double>> calc() {
     List<Map<String, double>> _ichi = [];
-    // List<double> _conversion = [];
-    // List<double> _lead1 = [];
-    // List<double> _lead2 = [];
-    // List<double> _lag = [];
     for (int i = 0; i < data.length; i++) {
-      // double lo = lowest(i, 5);
-      // double hi = highest(i, 5);
-      // double don = donchian(i, basePeriods);
-      _ichi.add({"base": donchian(i, basePeriods)});
+      double base = donchian(i, basePeriods);
+      double conversion =  donchian(i, conversionPeriods);
+      double lead1;
+      if (base != null && conversion != null) lead1 = (base + conversion)/2;
+      else lead1 = null;
+      double lead2 =  donchian(i, laggingSpan2Periods);
+      _ichi.add( {
+        "base": base,  // Kijun
+        "conversion": conversion, // Tenkan
+        "lead1": lead1, // Senkou A
+        "lead2": lead2, // Senkou B
+        "lag": lag(i)
+      });
       // print('i: $i data: ${data[i]['low']} low: $lo hi: $hi don:$don');
     }
-    // print(_ichi);
+    // print(_ichi.sublist(100,105));
     return _ichi;
+  }
+
+  double lag(i) {
+    if (i+displacement > data.length -1) return null;
+    return data[i+displacement]['close'];
   }
 
   double lowest(i, len) {

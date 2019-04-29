@@ -127,53 +127,94 @@ class _OHLCVPainter extends CustomPainter {
   double _max;
   double _maxVolume;
 
-  final double space = 5.0;
+  final double space = 3.0;
+  final int displacement = 26; // displacement for lagging span
 
   List<TextPainter> gridLineTextPainters = [];
   TextPainter maxVolumePainter;
 
   drawIchi(canvas, i, rectWidth, height, heightNormalizer) {
-    if (i==0) return;
-    if (ichimoku[i - 1]['base'] == null) return;
-    Paint rectPaint = new Paint()
-      ..color = Colors.red
-      ..strokeWidth = 1;
+    if (i == 0) return;
+
+    Paint rectPaint = new Paint();
+    double val, val1;
     double rectLeft = ((i) * rectWidth) + lineWidth / 2;
     double rectLeft1 = ((i - 1) * rectWidth) + lineWidth / 2;
     double middle = rectLeft + rectWidth / 2 - lineWidth / 2 - space / 2;
     double middle1 = rectLeft1 + rectWidth / 2 - lineWidth / 2 - space / 2;
-    double base = height - (ichimoku[i]["base"] - _min) * heightNormalizer;
-    double base1 = height - (ichimoku[i-1]["base"] - _min) * heightNormalizer;
-    canvas.drawLine(
-    new Offset(middle1, base1), new Offset(middle, base), rectPaint);
 
+    rectPaint.strokeWidth = 2;
+    // base
+    if (ichimoku[i - 1]['base'] != null) {
+      rectPaint.color = Colors.red;
+      val = height - (ichimoku[i]["base"] - _min) * heightNormalizer;
+      val1 = height - (ichimoku[i - 1]["base"] - _min) * heightNormalizer;
+      canvas.drawLine(
+        new Offset(middle1, val1), new Offset(middle, val), rectPaint);
+    }
+    // conversion
+    if (ichimoku[i - 1]["conversion"] != null) {
+      rectPaint.color = Colors.blue;
+      val = height - (ichimoku[i]["conversion"] - _min) * heightNormalizer;
+      val1 = height - (ichimoku[i - 1]["conversion"] - _min) * heightNormalizer;
+      canvas.drawLine(
+        new Offset(middle1, val1), new Offset(middle, val), rectPaint);
+    }
+    // cloud
+    double lead1 = ichimoku[i]["lead1"];
+    double lead2 = ichimoku[i]["lead2"];
+    double lead1_1 = ichimoku[i-1]["lead1"];
+    double lead2_1 = ichimoku[i-1]["lead2"];
+    if (lead1_1 != null && lead2_1 != null) {
+      double val_1, val1_1;
+      rectPaint.color = lead1 > lead2 ? Color(0x4453B987) : Color(0x44EB4D5C);
+      val = height - (lead1 - _min) * heightNormalizer;
+      val1 = height - (lead2 - _min) * heightNormalizer;
+      val_1 = height - (lead1_1 - _min) * heightNormalizer;
+      val1_1 = height - (lead2_1 - _min) * heightNormalizer;
+      // double top = val > val1 ? val1 : val;
+      // double bottom = val > val1 ? val : val1;
+      // Rect rect = new Rect.fromLTRB( middle1, top, middle, bottom);
+      // canvas.drawRect(rect, rectPaint);
+      var path1 = Path()
+      ..moveTo(middle1, val_1)
+      ..lineTo(middle, val)
+      ..lineTo(middle, val1)
+      ..lineTo(middle1, val1_1);
+      canvas.drawPath(path1, rectPaint);
+    }
+    // lag
+    if (i < data.length-displacement) {
+      rectPaint.color = Colors.purple;
+      val = height - (ichimoku[i]["lag"] - _min) * heightNormalizer;
+      val1 = height - (ichimoku[i - 1]["lag"] - _min) * heightNormalizer;
+      canvas.drawLine(
+        new Offset(middle1, val1), new Offset(middle, val), rectPaint);
+    }
   }
 
-  drawVolumeMA(canvas, int i, height, volumeHeight, double rectWidth,
-      double volumeNormalizer) {
+  drawVolumeMA(canvas, i, height, volumeHeight, rectWidth, volumeNormalizer) {
     // print(i);
-    if (i==0) return;
+    if (i == 0) return;
     if (maVol[i - 1] == null) return;
 
     Paint rectPaint = new Paint()
       ..color = Colors.indigo
       ..strokeWidth = 1;
     if (i > 0 && maVol[i] != null) {
-      // double rectLeft = (i * rectWidth) + lineWidth / 2;
-      // double rectLeft1 = ((i - 1) * rectWidth) + lineWidth / 2;
-      // double rectRight = ((i + 1) * rectWidth) - lineWidth / 2 - space;
-    double rectLeft = ((i) * rectWidth) + lineWidth / 2;
-    double rectLeft1 = ((i - 1) * rectWidth) + lineWidth / 2;
-    double middle = rectLeft + (rectWidth  - lineWidth  - space) / 2;
-    double middle1 = rectLeft1 + (rectWidth  - lineWidth  - space) / 2;
+      double rectRight = ((i + 1) * rectWidth) - lineWidth / 2 - space;
+      // double rectLeft = ((i) * rectWidth) + lineWidth / 2;
+      double rectLeft1 = ((i - 1) * rectWidth) + lineWidth / 2;
+      // double middle = rectLeft + (rectWidth  - lineWidth  - space) / 2;
+      // double middle1 = rectLeft1 + (rectWidth  - lineWidth  - space) / 2;
       // if (maVol[i - 1] != null) {
-    double vol = (height + volumeHeight) -
-        (maVol[i] * volumeNormalizer - lineWidth / 2);
-    double vol1 = (height + volumeHeight) -
-        (maVol[i - 1] * volumeNormalizer - lineWidth / 2);
-    canvas.drawLine(
-        new Offset(middle1, vol1), new Offset(middle, vol), rectPaint);
-    print('$i: $middle1, $vol1 => $middle, $vol'); 
+      double vol = (height + volumeHeight) -
+          (maVol[i] * volumeNormalizer - lineWidth / 2);
+      double vol1 = (height + volumeHeight) -
+          (maVol[i - 1] * volumeNormalizer - lineWidth / 2);
+      canvas.drawLine(
+        new Offset(rectLeft1, vol1), new Offset(rectRight, vol), rectPaint);
+      // print('$i: ${middle1.toStringAsFixed(0)}, ${vol1.toStringAsFixed(0)} => ${middle.toStringAsFixed(0)}, ${vol.toStringAsFixed(0)}');
       // }
     }
   }
@@ -243,6 +284,7 @@ class _OHLCVPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    // print('*** paint');
     if (_min == null || _max == null || _maxVolume == null) {
       update();
     }
@@ -314,9 +356,9 @@ class _OHLCVPainter extends CustomPainter {
         canvas.drawRect(ocRect, rectPaint);
 
         // Draw volume bars
+        rectPaint.color = Color(0x88EB4D5C);
         Rect volumeRect = new Rect.fromLTRB(
             rectLeft, volumeBarTop, rectRight, volumeBarBottom);
-        rectPaint.color = Colors.blueAccent[100];
         canvas.drawRect(volumeRect, rectPaint);
       } else {
         // Draw candlestick if increase
@@ -332,28 +374,11 @@ class _OHLCVPainter extends CustomPainter {
             new Rect.fromLTRB(rectLeft, rectTop, rectRight, rectBottom);
         canvas.drawRect(ocRect, rectPaint);
 
-        // canvas.drawLine(new Offset(rectLeft, rectBottom - lineWidth / 2),
-        //     new Offset(rectRight, rectBottom - lineWidth / 2), rectPaint);
-        // canvas.drawLine(new Offset(rectLeft, rectTop + lineWidth / 2),
-        //     new Offset(rectRight, rectTop + lineWidth / 2), rectPaint);
-        // canvas.drawLine(new Offset(rectLeft + lineWidth / 2, rectBottom),
-        //     new Offset(rectLeft + lineWidth / 2, rectTop), rectPaint);
-        // canvas.drawLine(new Offset(rectRight - lineWidth / 2, rectBottom),
-        //     new Offset(rectRight - lineWidth / 2, rectTop), rectPaint);
-
         // Draw volume bars
+        rectPaint.color = Color(0x8853B987);
         Rect volumeRect = new Rect.fromLTRB(
             rectLeft, volumeBarTop, rectRight, volumeBarBottom);
-        rectPaint.color = Colors.blueAccent[100];
         canvas.drawRect(volumeRect, rectPaint);
-        // canvas.drawLine(new Offset(rectLeft, volumeBarBottom - lineWidth / 2),
-        //     new Offset(rectRight, volumeBarBottom - lineWidth / 2), rectPaint);
-        // canvas.drawLine(new Offset(rectLeft, volumeBarTop + lineWidth / 2),
-        //     new Offset(rectRight, volumeBarTop + lineWidth / 2), rectPaint);
-        // canvas.drawLine(new Offset(rectLeft + lineWidth / 2, volumeBarBottom),
-        //     new Offset(rectLeft + lineWidth / 2, volumeBarTop), rectPaint);
-        // canvas.drawLine(new Offset(rectRight - lineWidth / 2, volumeBarBottom),
-        //     new Offset(rectRight - lineWidth / 2, volumeBarTop), rectPaint);
       }
 
       // Draw low/high candlestick wicks

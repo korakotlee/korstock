@@ -1,1 +1,1 @@
-Play imaginary stock game. Pick BUY or SELL and you coin will add up according to the price on the following day. Pick HOLD to skip to the next day. Everybody start with 100 coins.
+Play imaginary stock game. Pick BUY or SELL and you coin will add up according to the price on the following day. Pick HOLD to skip to the next day. Everybody start with 100 coins. The closing price difference has to be more than 0.5% to affect the coins. 
