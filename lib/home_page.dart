@@ -331,20 +331,20 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
         
-            // Container(height: 50.0,
-            //   child: Row(
-            //     children: <Widget>[
-            //       Expanded(
-            //         child: Container(
-            //           // padding: EdgeInsets.only(bottom: 10.0),
-            //           child: showADX(),
-            //         )
-            //       ),
-            //       Container(width: gridTextSpace,
-            //         alignment: FractionalOffset.center,
-            //         child: Text('ADX'),)
-            //     ]
-            //   ,),),
+            Container(height: 50.0,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      // padding: EdgeInsets.only(bottom: 10.0),
+                      child: showADX(),
+                    )
+                  ),
+                  Container(width: gridTextSpace,
+                    alignment: FractionalOffset.center,
+                    child: Text('ADX'),)
+                ]
+              ,),),
           ],
         ), ),
         Container( // Space for buttons

@@ -42,6 +42,7 @@ class ADXPainter extends CustomPainter {
     double normalizer = height / max;
 
     for (int i = 1; i < data.length; i++) {
+      if (data[i] == null || data[i-1] == null) continue;
       double rectLeft = ((i) * rectWidth) + lineWidth / 2;
       double rectLeft1 = ((i - 1) * rectWidth) + lineWidth / 2;
       double middle = rectLeft + rectWidth / 2 - lineWidth / 2 - space / 2;
