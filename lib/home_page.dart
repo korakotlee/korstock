@@ -51,8 +51,8 @@ class _HomePageState extends State<HomePage> {
         maVol = ma(quotes, 20);
         Ichimoku ichi = new Ichimoku(quotes);
         ichimoku = ichi.calc();
-        // ADX adxClass = new ADX(quotes);
-        // adxList = adxClass.calc();
+        ADX adxClass = new ADX(quotes);
+        adxList = adxClass.calc();
         price = quotes[last]['close'];
         qDate = quotes[last]['qDate'];
       });
@@ -84,13 +84,6 @@ class _HomePageState extends State<HomePage> {
                 ]),
           ),
         ));
-  }
-
-  Widget showADX() {
-    if (this.quotes == null) return Container();
-    int end = begin + n - 1;
-
-    return ADXChart(data: adxList.sublist(begin, end));
   }
 
   void showHelp() {
@@ -186,7 +179,7 @@ class _HomePageState extends State<HomePage> {
       itemCount: results.length,
       itemBuilder: (BuildContext context, int index) {
         IconData icon = Icons.compare_arrows;
-        print(results[index].direction);
+        // print(results[index].direction);
         switch (results[index].direction) {
           case 'up': { icon = Icons.arrow_upward; }
           break;
@@ -305,29 +298,55 @@ class _HomePageState extends State<HomePage> {
         ]));
   }
 
+  Widget showADX() {
+    if (this.adxList == null) return Container();
+    int end = begin + n - 1;
+
+    return ADXChart(data: adxList.sublist(begin, end));
+  }
+
   Widget candle() {
     if (quotes == null) {
       return Container();
     }
     int end = begin + n - 1;
+    double gridTextSpace = 6.0 * 6; // 6 * number of chars (e.g. 142.21)
     return Row(
       children: <Widget>[
         Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(top: 30.0, bottom: 10.0, left: 10.0),
-            child: OHLCVGraph(
-                // fallbackHeight: 50.0,
-                increaseColor: Color(0xff53B987),
-                decreaseColor: Color(0xffEB4D5C),
-                data: this.quotes.sublist(begin, end),
-                maVol: this.maVol.sublist(begin, end),
-                ichimoku: this.ichimoku.sublist(begin, end),
-                enableGridLines: true,
-                labelPrefix: '',
-                volumeProp: 0.2),
-          ),
-        ),
-        Container(
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(top: 30.0, bottom: 10.0, left: 10.0),
+                child: OHLCVGraph(
+                  increaseColor: Color(0xff53B987),
+                  decreaseColor: Color(0xffEB4D5C),
+                  data: this.quotes.sublist(begin, end),
+                  maVol: this.maVol.sublist(begin, end),
+                  ichimoku: this.ichimoku.sublist(begin, end),
+                  enableGridLines: true,
+                  labelPrefix: '',
+                  volumeProp: 0.2),
+              ),
+            ),
+        
+            Container(height: 50.0,
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(
+                      child: showADX(),
+                    )
+                  ),
+                  Container(width: gridTextSpace,
+                    alignment: FractionalOffset.center,
+                    child: Text('ADX'),)
+                ]
+              ,),),
+          ],
+        ), ),
+        Container( // Space for buttons
           width: 100.0,
         )
       ],
