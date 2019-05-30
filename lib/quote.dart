@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 
 class Quote {
+  static final String symbol= 'bzun';
   final String _qDate;
   final double _open;
   final double _hi;
@@ -19,7 +20,8 @@ class Quote {
   double get vol => _vol;
 
   static Future<String> _getFile() async {
-    String content = await rootBundle.loadString("assets/spy.json");
+    String content = await rootBundle.loadString("assets/$symbol.json");
+    // String content = await rootBundle.loadString("assets/spy.json");
     return content;
   }
 
